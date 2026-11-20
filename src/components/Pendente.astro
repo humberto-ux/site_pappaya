@@ -1,0 +1,30 @@
+---
+/**
+ * Marca uma afirmação que só pode ir ao ar depois que a equipe confirmar
+ * e separar a evidência (tela, vídeo, autorização).
+ * Com PUBLIC_OCULTAR_PENDENTES=true, o conteúdo some do site publicado.
+ *
+ * <Pendente>frase</Pendente>          frase dentro de um parágrafo
+ * <Pendente bloco>...</Pendente>      bloco inteiro (passos, seções)
+ */
+import { ocultarPendentes } from '../config';
+interface Props { bloco?: boolean; nota?: string }
+const { bloco = false, nota } = Astro.props;
+---
+{!ocultarPendentes && (
+  bloco ? (
+    <div class="pendente-bloco">
+      <p class="pendente-bloco__aviso"><span class="pendente__etiqueta">prova pendente</span>{nota ?? 'Este bloco só vai ao ar depois que a equipe confirmar a evidência.'}</p>
+      <slot />
+    </div>
+  ) : (
+    <span class="pendente"><slot /><span class="pendente__etiqueta" title={nota ?? 'Só vai ao ar com evidência confirmada'}>prova pendente</span></span>
+  )
+)}
+<style>
+  .pendente-bloco { position: relative; border: 1.5px dashed var(--ambar); border-radius: var(--raio-lg); padding: clamp(16px, 2.4vw, 24px); background: rgb(251 239 210 / 0.25); }
+  .pendente-bloco__aviso { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--ambar); margin-bottom: 16px; }
+  .pendente-bloco__aviso :global(.pendente__etiqueta) { margin-left: 0; }
+  :global(.secao--tinta) .pendente-bloco { background: rgb(251 239 210 / 0.06); border-color: #e0b85c; }
+  :global(.secao--tinta) .pendente-bloco__aviso { color: #f1cf86; }
+</style>

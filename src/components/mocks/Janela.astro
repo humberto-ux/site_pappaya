@@ -1,0 +1,13 @@
+---
+import './mocks.css';
+interface Props { titulo: string; class?: string }
+const { titulo, class: classe } = Astro.props;
+---
+<div class:list={['janela', classe]} role="img" aria-label={`Ilustração da tela "${titulo}" da Valentina, com dados fictícios`}>
+  <div class="janela__barra" aria-hidden="true">
+    <span class="janela__pontos"><i></i><i></i><i></i></span>
+    <span class="janela__titulo"><b>Valentina</b> · {titulo}</span>
+    <span class="janela__chip">dados fictícios</span>
+  </div>
+  <div class="janela__corpo" aria-hidden="true"><slot /></div>
+</div>

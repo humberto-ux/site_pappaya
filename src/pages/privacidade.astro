@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Pendente from '../components/Pendente.astro';
+---
+<Base pagina="privacidade" titulo="Política de Privacidade | Pappaya" descricao="Como a Pappaya trata os dados enviados pelo site.">
+  <section class="secao">
+    <div class="container texto-legal">
+      <p class="sobretitulo">Política de Privacidade</p>
+      <h1>Política de Privacidade</h1>
+      <Pendente bloco nota="Texto jurídico a ser fornecido pela Pappaya antes da publicação.">
+        <p>Esta página vai trazer a Política de Privacidade da Pappaya, revisada pelo jurídico da empresa. Ela precisa cobrir, no mínimo: quem é o controlador dos dados (razão social e CNPJ), quais dados o formulário e o WhatsApp coletam, para que são usados, com quem são compartilhados (por exemplo, o CRM Valentina e as ferramentas de automação), por quanto tempo ficam guardados, quais cookies de medição o site usa (Google Tag Manager e Google Analytics) e como o titular pede acesso, correção ou exclusão, conforme a LGPD.</p>
+      </Pendente>
+    </div>
+  </section>
+</Base>
+<style>
+  .texto-legal { max-width: 780px; display: grid; gap: 24px; }
+  .texto-legal h1 { font-size: clamp(2rem, 4vw, 3rem); }
+  .texto-legal p { color: var(--tinta-2); }
+</style>

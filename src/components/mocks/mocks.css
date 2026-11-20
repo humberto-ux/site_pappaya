@@ -1,0 +1,79 @@
+/* Ilustrações de interface da Valentina, com dados fictícios.
+   Servem de espaço reservado até chegarem as telas reais. */
+
+.janela {
+  --m-fundo: #ffffff;
+  --m-linha: #ebe6dd;
+  --m-suave: #f7f4ef;
+  --m-texto: #1b2723;
+  --m-texto-2: #5d6a64;
+  background: var(--m-fundo);
+  border: 1px solid var(--linha);
+  border-radius: 18px;
+  box-shadow: var(--sombra-lg);
+  overflow: hidden;
+  color: var(--m-texto);
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: left;
+}
+.janela__barra {
+  display: flex; align-items: center; gap: 10px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--m-linha);
+  background: var(--m-suave);
+}
+.janela__pontos { display: flex; gap: 6px; }
+.janela__pontos i { width: 10px; height: 10px; border-radius: 50%; background: #ddd5c8; }
+.janela__titulo { font-weight: 600; font-size: 12.5px; color: var(--m-texto-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.janela__titulo b { color: var(--m-texto); font-weight: 650; }
+.janela__chip {
+  margin-left: auto; flex: none;
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 999px;
+  color: var(--ambar); background: var(--ambar-claro);
+}
+.janela__corpo { position: relative; }
+
+/* Peças reutilizadas */
+.m-rotulo { font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--m-texto-2); }
+.m-tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 2px 8px; border-radius: 999px;
+  font-size: 11.5px; font-weight: 600; white-space: nowrap;
+  background: var(--m-suave); color: var(--m-texto-2); border: 1px solid var(--m-linha);
+}
+.m-tag--verde { background: var(--verde-claro); color: var(--verde); border-color: transparent; }
+.m-tag--papaya { background: var(--papaya-claro); color: var(--papaya-escuro); border-color: transparent; }
+.m-tag--ambar { background: var(--ambar-claro); color: var(--ambar); border-color: transparent; }
+.m-avatar {
+  display: inline-grid; place-items: center; flex: none;
+  width: 28px; height: 28px; border-radius: 50%;
+  font-size: 11px; font-weight: 700; color: #fff; background: var(--verde);
+}
+.m-avatar--papaya { background: var(--papaya); color: var(--tinta); }
+.m-avatar--tinta { background: var(--tinta); }
+.m-avatar--cinza { background: #b9b2a6; }
+.m-caixa { border: 1px solid var(--m-linha); border-radius: 12px; padding: 12px; background: #fff; }
+.m-ia { background: linear-gradient(180deg, #f1f8f4, #fff); border-color: #cfe6da; }
+.m-ia .m-rotulo { color: var(--verde); display: flex; align-items: center; gap: 6px; }
+.m-ia .m-rotulo::before { content: '✦'; font-size: 11px; }
+
+/* Balões de conversa */
+.m-chat { display: flex; flex-direction: column; gap: 8px; padding: 14px; background: #efeae2; }
+.m-balao { max-width: 82%; padding: 7px 10px 6px; border-radius: 10px; font-size: 12.5px; box-shadow: 0 1px 0 rgb(0 0 0 / 0.06); }
+.m-balao small { display: block; text-align: right; font-size: 10px; color: #7a857f; margin-top: 2px; }
+.m-balao--cliente { align-self: flex-start; background: #fff; border-top-left-radius: 3px; }
+.m-balao--ia { align-self: flex-end; background: #d9fdd3; border-top-right-radius: 3px; }
+.m-balao--ia em { font-style: normal; display: block; font-size: 10px; font-weight: 700; color: var(--verde); margin-bottom: 2px; letter-spacing: 0.03em; }
+.m-sistema { align-self: center; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 8px; background: #fff7e0; color: var(--ambar); }
+
+/* Marcadores numerados que apontam o que olhar */
+.m-marca {
+  position: absolute; z-index: 2;
+  display: grid; place-items: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--papaya); color: var(--tinta);
+  font: 700 13px/1 var(--fonte-texto);
+  box-shadow: 0 0 0 4px rgb(242 98 46 / 0.22);
+}

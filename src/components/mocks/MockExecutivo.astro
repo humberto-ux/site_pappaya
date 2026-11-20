@@ -1,0 +1,46 @@
+---
+/** Painel executivo com dados mascarados (Soluções sob projeto). */
+import './mocks.css';
+const carteiras = [
+  ['Carteira A', 38, 22], ['Carteira B', 31, 29], ['Carteira C', 64, 30], ['Carteira D', 26, 24], ['Carteira E', 47, 33],
+];
+const max = 70;
+---
+<div class="janela mx" role="img" aria-label="Ilustração de painel executivo com dados fictícios">
+  <div class="janela__barra" aria-hidden="true">
+    <span class="janela__pontos"><i></i><i></i><i></i></span>
+    <span class="janela__titulo"><b>Relatório executivo</b> · Atrasos por carteira</span>
+    <span class="janela__chip">dados fictícios</span>
+  </div>
+  <div class="mx__corpo" aria-hidden="true">
+    <div class="mx__topo">
+      <div><span class="m-rotulo">Pergunta da diretoria</span><strong>Em quais carteiras se concentrou o aumento dos atrasos?</strong></div>
+      <span class="m-tag">Out vs. Set</span>
+    </div>
+    <div class="mx__linhas">
+      {carteiras.map(([nome, atual, ant]) => (
+        <div class:list={['mx__linha', { 'mx__linha--destaque': nome === 'Carteira C' }]}>
+          <span>{nome}</span>
+          <div class="mx__trilho">
+            <i class="mx__ant" style={`width:${(Number(ant) / max) * 100}%`}></i>
+            <i class="mx__atual" style={`width:${(Number(atual) / max) * 100}%`}></i>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="mx__nota"><span class="m-tag m-tag--papaya">Concentrar a cobrança na Carteira C</span></div>
+  </div>
+</div>
+<style>
+  .mx__corpo { padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+  .mx__topo { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+  .mx__topo strong { display: block; font-family: var(--fonte-titulo); font-size: 16px; line-height: 1.25; margin-top: 4px; max-width: 32ch; }
+  .mx__linhas { display: grid; gap: 10px; }
+  .mx__linha { display: grid; grid-template-columns: 78px 1fr; align-items: center; gap: 10px; font-size: 12px; color: var(--m-texto-2); }
+  .mx__linha--destaque span { color: var(--m-texto); font-weight: 700; }
+  .mx__trilho { position: relative; height: 18px; background: var(--m-suave); border-radius: 6px; overflow: hidden; }
+  .mx__trilho i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; }
+  .mx__ant { background: #d6d0c4; top: 11px !important; }
+  .mx__atual { background: var(--verde); bottom: 7px !important; }
+  .mx__linha--destaque .mx__atual { background: var(--papaya); }
+</style>

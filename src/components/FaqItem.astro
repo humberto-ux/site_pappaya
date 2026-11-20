@@ -1,0 +1,23 @@
+---
+interface Props { pergunta: string; aberto?: boolean }
+const { pergunta, aberto = false } = Astro.props;
+---
+<details class="faq__item" open={aberto}>
+  <summary><span>{pergunta}</span><span class="faq__mais" aria-hidden="true"></span></summary>
+  <div class="faq__resposta"><p><slot /></p></div>
+</details>
+<style>
+  .faq__item { border-bottom: 1px solid var(--linha-forte); }
+  summary {
+    display: flex; justify-content: space-between; align-items: center; gap: 24px;
+    padding: 24px 0; cursor: pointer; list-style: none;
+    font-family: var(--fonte-titulo); font-size: clamp(1.1rem, 1.6vw, 1.3rem); font-weight: 600; letter-spacing: -0.01em;
+  }
+  summary::-webkit-details-marker { display: none; }
+  .faq__mais { position: relative; flex: none; width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--linha-forte); }
+  .faq__mais::before, .faq__mais::after { content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.6px; background: var(--tinta); transform: translate(-50%, -50%); transition: transform 0.2s ease; }
+  .faq__mais::after { transform: translate(-50%, -50%) rotate(90deg); }
+  details[open] .faq__mais::after { transform: translate(-50%, -50%) rotate(0deg); }
+  .faq__resposta { padding: 0 56px 26px 0; color: var(--tinta-2); max-width: 70ch; }
+  @media (max-width: 600px) { .faq__resposta { padding-right: 0; } }
+</style>

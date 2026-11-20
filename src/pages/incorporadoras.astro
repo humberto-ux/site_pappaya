@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import Abertura from '../components/Abertura.astro';
+import Pendente from '../components/Pendente.astro';
+import Reservado from '../components/Reservado.astro';
+import Roteiro from '../components/Roteiro.astro';
+import Integracoes from '../components/Integracoes.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import BotaoWhatsApp from '../components/BotaoWhatsApp.astro';
+import MockFunil from '../components/mocks/MockFunil.astro';
+import MockContato from '../components/mocks/MockContato.astro';
+import MockRegra from '../components/mocks/MockRegra.astro';
+import { linkFormulario } from '../config';
+
+const passos = [
+  { titulo: 'O contato chega.', texto: 'O interessado clica no anúncio do Residencial Jardins e escreve: "Quero saber do apartamento de 2 quartos." A Valentina registra a origem: campanha do Residencial Jardins.' },
+  { titulo: 'A IA qualifica.', texto: 'Ela confirma o empreendimento, pergunta a faixa de valor e se ele pretende financiar, e classifica o interesse. Pela regra, o contato vai para a fila do Residencial Jardins.' },
+  { titulo: 'O corretor assume.', texto: 'O corretor de plantão recebe o contato com o resumo da conversa e a tarefa "retornar em até 15 minutos". Ele continua a conversa no mesmo número.' },
+  { titulo: 'O coordenador acompanha.', texto: 'Depois, ele vê quanto tempo levou a primeira resposta, qual corretor assumiu, o retorno agendado e a etapa no funil.' },
+];
+---
+<Base
+  pagina="incorporacao"
+  titulo="CRM para incorporadoras e loteadoras com WhatsApp e IA | Pappaya"
+  descricao="Cada lead de campanha vai para o empreendimento e o corretor certos, com histórico. A diretoria acompanha da proposta ao recebimento."
+>
+  <!-- 3.1 Abertura -->
+  <Abertura sobretitulo="Incorporação e loteamentos" titulo="Cada lead do lançamento com um corretor, um histórico e um próximo passo.">
+    <Fragment slot="subtitulo">A Pappaya implanta o CRM Valentina em incorporadoras e loteadoras para que nenhum contato de campanha se perca entre corretores próprios e imobiliárias.</Fragment>
+    <Fragment slot="botoes">
+      <a class="botao botao--papaya" href={linkFormulario('valentina')}>Ver o roteiro com o meu empreendimento</a>
+      <BotaoWhatsApp pagina="incorporacao" />
+    </Fragment>
+    <Fragment slot="visual">
+      <Reservado nota="tela do funil separado por empreendimento, dados fictícios"><MockFunil /></Reservado>
+    </Fragment>
+  </Abertura>
+
+  <!-- 3.2 A rotina que conhecemos -->
+  <section class="secao secao--tinta">
+    <div class="container rotina">
+      <div class="revelar">
+        <p class="sobretitulo">A rotina que conhecemos</p>
+        <h2>O lead caro de mídia paga não pode cair num WhatsApp que todo mundo olha</h2>
+      </div>
+      <p class="lead revelar">O interessado chega por uma campanha ou por uma IA de atendimento. A equipe precisa saber em qual empreendimento ele tem interesse, quem deve assumir, o que já foi conversado e qual retorno ficou pendente. E a diretoria quer enxergar propostas, contratos, recebimentos e comissões sem montar planilha.</p>
+    </div>
+  </section>
+
+  <!-- 3.3 Do anúncio ao corretor -->
+  <section class="secao secao--branca">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">Roteiro de demonstração</p>
+        <h2>Do anúncio ao corretor, em quatro passos</h2>
+      </div>
+      <Pendente bloco nota="Os quatro passos só vão ao ar com o roteiro gravado em ambiente de demonstração.">
+        <Roteiro passos={passos}>
+          <Reservado nota="vídeo de 20 a 40 segundos por passo, ou um vídeo único com marcadores. “Residencial Jardins” é um nome fictício">
+            <MockContato />
+          </Reservado>
+        </Roteiro>
+      </Pendente>
+    </div>
+  </section>
+
+  <!-- 3.4 Para a diretoria / 3.5 Corretores próprios e imobiliárias -->
+  <section class="secao">
+    <div class="container lado">
+      <div class="revelar">
+        <p class="sobretitulo">Para a diretoria</p>
+        <h2>Do lead ao recebimento, no mesmo lugar</h2>
+        <p class="lead" style="margin:20px 0 28px"><Pendente>Com a integração ao ERP da incorporadora, a diretoria acompanha propostas, contratos, recebimentos e comissões ao lado do funil da Valentina. Cada integração é desenhada no diagnóstico, conforme o sistema que você usa.</Pendente></p>
+      </div>
+      <Reservado class="revelar" nota="painel de diretoria com dados mascarados, ou esquema “Valentina + ERP”">
+        <div class="cartao"><Integracoes itens={['Propostas', 'Contratos', 'Recebimentos', 'Comissões']} /></div>
+      </Reservado>
+    </div>
+  </section>
+
+  <section class="secao secao--papel2">
+    <div class="container lado lado--inv">
+      <div class="revelar">
+        <p class="sobretitulo">Corretores próprios e imobiliárias</p>
+        <h2>Regras claras de distribuição</h2>
+        <p class="lead" style="margin-top:20px"><Pendente>Defina quais empreendimentos vão para o plantão próprio, quais para imobiliárias parceiras e o que acontece quando ninguém responde no prazo. A regra fica escrita no sistema, não na memória de quem distribui.</Pendente></p>
+      </div>
+      <Reservado class="revelar" nota="tela da regra de distribuição"><MockRegra /></Reservado>
+    </div>
+  </section>
+
+  <!-- 3.6 Caso: oculto até haver caso autorizado -->
+  <section class="secao" style="padding-bottom:0">
+    <div class="container">
+      <Pendente bloco nota="Seção oculta até haver caso com indicador, período, base de comparação e autorização.">
+        <p class="sobretitulo">Caso</p>
+        <h2>Incorporadora com três lançamentos deixa de perder leads entre corretores</h2>
+        <p class="lead" style="margin-top:16px">[Texto do caso com indicador, período, base de comparação e autorização.]</p>
+      </Pendente>
+    </div>
+  </section>
+
+  <!-- 3.7 Chamada final -->
+  <ChamadaFinal titulo="Traga um empreendimento seu para a demonstração" texto="Mostramos o caminho de um lead do seu lançamento até o corretor, com as suas regras.">
+    <a class="botao botao--papaya" href={linkFormulario('valentina')}>Agendar demonstração</a>
+    <BotaoWhatsApp pagina="incorporacao" />
+  </ChamadaFinal>
+</Base>
+
+<style>
+  .rotina { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 6vw, 80px); align-items: end; }
+  .lado { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .lado--inv > :first-child { order: 2; }
+  @media (max-width: 900px) {
+    .rotina, .lado { grid-template-columns: minmax(0, 1fr); }
+    .lado--inv > :first-child { order: 0; }
+  }
+</style>

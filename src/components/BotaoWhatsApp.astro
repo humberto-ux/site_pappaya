@@ -1,0 +1,16 @@
+---
+import { linkWhatsApp, type PaginaId } from '../config';
+import IconeWhatsApp from './IconeWhatsApp.astro';
+interface Props { pagina: PaginaId; rotulo?: string; estilo?: 'contorno' | 'papaya' | 'tinta' }
+const { pagina, rotulo = 'Chamar no WhatsApp', estilo = 'contorno' } = Astro.props;
+const href = linkWhatsApp(pagina);
+const externo = href.startsWith('http');
+---
+<a
+  class:list={['botao', { 'botao--contorno': estilo === 'contorno', 'botao--papaya': estilo === 'papaya' }]}
+  href={href}
+  data-whatsapp={pagina}
+  {...(externo ? { target: '_blank', rel: 'noopener' } : {})}
+>
+  <IconeWhatsApp />{rotulo}
+</a>

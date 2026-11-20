@@ -1,0 +1,24 @@
+---
+/** Esquema simples: sistemas do cliente ligados à Valentina (sob projeto). */
+interface Props { itens?: string[] }
+const { itens = ['ERP', 'Reservas', 'Estoque'] } = Astro.props;
+---
+<div class="integ" aria-label={`Esquema: ${itens.join(', ')} ligados à Valentina`} role="img">
+  <div class="integ__fontes">
+    {itens.map((i) => <span class="integ__fonte">{i}</span>)}
+  </div>
+  <div class="integ__linhas" aria-hidden="true">
+    {itens.map(() => <i></i>)}
+  </div>
+  <div class="integ__hub"><span>Valentina</span><small>contato com os dados ao lado</small></div>
+</div>
+<style>
+  .integ { display: grid; grid-template-columns: auto 56px 1fr; align-items: center; width: 100%; margin: 6px 0 4px; }
+  .integ__fontes { display: grid; gap: 10px; }
+  .integ__fonte { padding: 8px 14px; border: 1px solid var(--linha-forte); border-radius: 10px; background: var(--papel); font-weight: 600; font-size: 0.9rem; text-align: center; }
+  .integ__linhas { position: relative; height: 100%; display: grid; }
+  .integ__linhas i { border-top: 1.5px dashed var(--papaya); align-self: center; }
+  .integ__hub { border-radius: 16px; padding: 16px 18px; background: var(--tinta); color: var(--papel); }
+  .integ__hub span { display: block; font-family: var(--fonte-titulo); font-weight: 650; font-size: 1.2rem; }
+  .integ__hub small { color: #b6c4bd; font-size: 0.82rem; }
+</style>

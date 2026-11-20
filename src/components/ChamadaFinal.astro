@@ -1,0 +1,33 @@
+---
+/** Bloco de fechamento das páginas: título, texto e botões. */
+interface Props { titulo: string; texto: string }
+const { titulo, texto } = Astro.props;
+---
+<section class="secao chamada" aria-labelledby="chamada-final">
+  <div class="container">
+    <div class="chamada__caixa revelar">
+      <div class="chamada__brilho" aria-hidden="true"></div>
+      <h2 id="chamada-final">{titulo}</h2>
+      <p class="lead">{texto}</p>
+      <div class="botoes"><slot /></div>
+    </div>
+  </div>
+</section>
+<style>
+  .chamada__caixa {
+    position: relative; overflow: hidden; isolation: isolate;
+    background: var(--tinta); color: var(--papel);
+    border-radius: clamp(22px, 3vw, 36px);
+    padding: clamp(40px, 7vw, 96px) clamp(24px, 6vw, 88px);
+    text-align: center;
+  }
+  .chamada__brilho {
+    position: absolute; z-index: -1; width: 680px; height: 680px; left: 50%; top: -420px; transform: translateX(-50%);
+    background: radial-gradient(closest-side, rgb(242 98 46 / 0.55), rgb(242 98 46 / 0) 70%);
+  }
+  .chamada h2 { max-width: 18ch; margin-inline: auto; }
+  .chamada .lead { color: #c9d3ce; margin: 20px auto 32px; }
+  .chamada .botoes { justify-content: center; }
+  .chamada :global(.botao--contorno) { --b-fg: var(--papel); --b-borda: rgb(255 255 255 / 0.3); }
+  .chamada :global(.botao--contorno:hover) { --b-borda: var(--papel); }
+</style>

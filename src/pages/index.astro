@@ -1,0 +1,208 @@
+---
+import Base from '../layouts/Base.astro';
+import Abertura from '../components/Abertura.astro';
+import Pendente from '../components/Pendente.astro';
+import Reservado from '../components/Reservado.astro';
+import Icone from '../components/Icone.astro';
+import BotaoWhatsApp from '../components/BotaoWhatsApp.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import Metodo from '../components/Metodo.astro';
+import MockContato from '../components/mocks/MockContato.astro';
+import MockFunil from '../components/mocks/MockFunil.astro';
+import MockFila from '../components/mocks/MockFila.astro';
+import MockExecutivo from '../components/mocks/MockExecutivo.astro';
+import { linkFormulario } from '../config';
+---
+<Base
+  pagina="inicio"
+  titulo="Pappaya | CRM Valentina, IA e automação para atendimento e vendas"
+  descricao="A Pappaya implanta o CRM Valentina com o WhatsApp de cada unidade, integra seus sistemas e acompanha até a rotina funcionar. Para incorporadoras, loteadoras e redes de hotéis."
+>
+  <!-- 1.1 Abertura -->
+  <Abertura sobretitulo="CRM Valentina + implantação Pappaya" titulo="Nenhum cliente sem resposta. Nenhum contato sem dono.">
+    <Fragment slot="subtitulo">A Pappaya organiza o atendimento e as vendas de empresas com várias unidades. Implantamos o CRM Valentina com o WhatsApp de cada equipe e acompanhamos até a rotina funcionar.</Fragment>
+    <Fragment slot="botoes">
+      <a class="botao botao--papaya" href="/valentina">Ver a Valentina funcionando</a>
+      <BotaoWhatsApp pagina="inicio" rotulo="Conversar sobre um projeto" />
+    </Fragment>
+    <Fragment slot="visual">
+      <Reservado nota="substituir pela tela real da Valentina com dados fictícios">
+        <MockContato />
+      </Reservado>
+      <ol class="legenda">
+        <li><span>1</span>De onde o contato veio</li>
+        <li><span>2</span>O que a IA entendeu</li>
+        <li><span>3</span>Quem assumiu e o próximo passo</li>
+      </ol>
+    </Fragment>
+  </Abertura>
+
+  <!-- 1.2 O problema -->
+  <section class="secao">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">O problema</p>
+        <h2>Quem ficou com esse lead?</h2>
+        <p class="lead">Quando ninguém sabe responder, a venda já começou a escapar. O contato chegou pela campanha, caiu num WhatsApp que várias pessoas olham, alguém respondeu ou não, e o retorno prometido ficou na memória de quem atendeu.</p>
+      </div>
+      <div class="grade grade-3">
+        <div class="cartao revelar"><span class="icone"><Icone nome="pergunta" /></span><h3>Contato sem dono.</h3><p>O interessado escreve e ninguém sabe quem deve responder.</p></div>
+        <div class="cartao revelar"><span class="icone"><Icone nome="repetir" /></span><h3>Cliente repetindo a história.</h3><p>Cada pessoa que assume pergunta tudo de novo.</p></div>
+        <div class="cartao revelar"><span class="icone"><Icone nome="olho" /></span><h3>Gestor sem visão.</h3><p>Para saber o que aconteceu, é preciso pedir relatório.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.3 Como a Valentina resolve -->
+  <section class="secao secao--tinta">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">Como a Valentina resolve</p>
+        <h2>O contato chega, a IA entende, a pessoa certa assume.</h2>
+      </div>
+      <ol class="fluxo">
+        <li class="revelar">
+          <span class="fluxo__icone"><Icone nome="mensagem" /></span>
+          <h3>Chega.</h3>
+          <p><Pendente>O interessado escreve no WhatsApp da unidade, e a Valentina registra de onde ele veio.</Pendente></p>
+        </li>
+        <li class="revelar">
+          <span class="fluxo__icone"><Icone nome="faisca" /></span>
+          <h3>A IA entende.</h3>
+          <p><Pendente>Ela pergunta o que falta, resume o pedido e identifica a unidade ou o produto.</Pendente></p>
+        </li>
+        <li class="revelar">
+          <span class="fluxo__icone"><Icone nome="pessoa" /></span>
+          <h3>A pessoa certa assume.</h3>
+          <p><Pendente>O contato vai para o corretor, o vendedor ou a recepção responsável, com o histórico pronto.</Pendente></p>
+        </li>
+      </ol>
+      <div class="fecho revelar">
+        <p class="lead"><Pendente>E o gestor acompanha tempo de resposta e retornos pendentes sem pedir relatório.</Pendente></p>
+        <a class="link-seta" href="/valentina">Conhecer a Valentina</a>
+      </div>
+      <p class="reservado__nota" style="margin-top:32px">Espaço reservado · uma tela por passo, ou um vídeo de 20 a 40 segundos que percorre os três</p>
+    </div>
+  </section>
+
+  <!-- 1.4 Setores -->
+  <section class="secao">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">Setores</p>
+        <h2>Feito para operações com várias unidades e muitos atendentes</h2>
+      </div>
+      <div class="grade grade-2">
+        <a class="setor revelar" href="/incorporadoras">
+          <div class="setor__visual"><div class="setor__zoom"><MockFunil /></div></div>
+          <div class="setor__texto">
+            <span class="setor__rotulo"><Icone nome="predio" />Incorporação e loteamentos</span>
+            <p>Cada lead da campanha vai para o empreendimento e o corretor certos, e a diretoria acompanha da proposta ao recebimento.</p>
+            <span class="link-seta">Ver como funciona na incorporação</span>
+          </div>
+        </a>
+        <a class="setor revelar" href="/hotelaria">
+          <div class="setor__visual"><div class="setor__zoom"><MockFila /></div></div>
+          <div class="setor__texto">
+            <span class="setor__rotulo"><Icone nome="cama" />Hotelaria</span>
+            <p>A cotação de sábado chega completa à recepção, com datas, ocupação e preferências.</p>
+            <span class="link-seta">Ver como funciona na hotelaria</span>
+          </div>
+        </a>
+      </div>
+      <p class="reservado__nota">Espaço reservado · foto real ou tela do setor em cada cartão, nada de banco de imagens</p>
+    </div>
+  </section>
+
+  <!-- 1.5 Além do CRM -->
+  <section class="secao secao--papel2">
+    <div class="container alem">
+      <div class="revelar">
+        <p class="sobretitulo">Além do CRM</p>
+        <h2>Quando o problema vai além do atendimento</h2>
+        <p class="lead" style="margin:20px 0 28px">Ligamos o CRM ao ERP, automatizamos rotinas e organizamos os dados que a diretoria usa para decidir. Partimos de uma pergunta concreta, como "em quais carteiras os atrasos aumentaram?", e chegamos aos dados.</p>
+        <a class="botao" href="/solucoes">Ver soluções sob projeto</a>
+      </div>
+      <div class="revelar">
+        <Reservado nota="relatório executivo com dados mascarados"><MockExecutivo /></Reservado>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1.6 Caso resumido: oculto até haver caso autorizado -->
+  <section class="secao" style="padding-bottom:0">
+    <div class="container">
+  <Pendente bloco nota="Seção oculta até haver um caso com indicador, período, base de comparação e autorização por escrito.">
+        <div class="caso">
+          <div>
+            <p class="sobretitulo">Caso</p>
+            <h2>[Setor do cliente] deixou de perder leads entre corretores</h2>
+            <p class="lead" style="margin-top:16px">Antes, [situação]. Em [prazo], a Pappaya [o que foi feito]. [Indicador] passou de [valor] para [valor], comparando os [60] dias antes e depois.</p>
+          </div>
+          <div class="foto-reservada"><div><strong>Painel da Valentina</strong>com dados mascarados do cliente</div></div>
+        </div>
+      </Pendente>
+    </div>
+  </section>
+
+  <!-- 1.7 Como trabalhamos -->
+  <section class="secao">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">Como trabalhamos</p>
+        <h2>Do diagnóstico à rotina funcionando</h2>
+      </div>
+      <Metodo />
+    </div>
+  </section>
+
+  <!-- 1.8 Chamada final -->
+  <ChamadaFinal
+    titulo="Vamos olhar a sua operação?"
+    texto="Em uma conversa de 30 a 45 minutos, sem custo, entendemos o seu caso, mostramos a Valentina no seu cenário e dizemos se é um caso de produto ou de diagnóstico."
+  >
+    <a class="botao botao--papaya" href={linkFormulario('conversa')}>Agendar uma conversa</a>
+    <BotaoWhatsApp pagina="inicio" />
+  </ChamadaFinal>
+</Base>
+
+<style>
+  .legenda { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 0.9rem; color: var(--tinta-2); }
+  .legenda li { display: inline-flex; align-items: center; gap: 8px; }
+  .legenda span { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--papaya); color: var(--tinta); font-size: 12px; font-weight: 700; }
+  @media (max-width: 640px) { .legenda { display: none; } }
+
+  .fluxo { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; counter-reset: passo; }
+  .fluxo li { position: relative; padding: 28px 28px 28px 0; border-top: 1px solid rgb(255 255 255 / 0.16); }
+  .fluxo li + li { padding-left: 28px; border-left: 1px solid rgb(255 255 255 / 0.1); }
+  .fluxo li::before { counter-increment: passo; content: '0' counter(passo); position: absolute; top: 28px; right: 28px; font-family: var(--fonte-titulo); font-weight: 600; color: #6f8279; }
+  .fluxo__icone { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: rgb(242 98 46 / 0.16); color: #ffb08f; margin-bottom: 22px; }
+  .fluxo__icone :global(svg) { width: 24px; height: 24px; }
+  .fluxo h3 { font-size: 1.5rem; margin-bottom: 10px; }
+  .fluxo p { color: #c9d3ce; }
+  @media (max-width: 860px) {
+    .fluxo { grid-template-columns: 1fr; }
+    .fluxo li, .fluxo li + li { padding: 28px 0; border-left: 0; }
+    .fluxo li::before { right: 0; }
+  }
+  .fecho { margin-top: 40px; padding-top: 32px; border-top: 1px solid rgb(255 255 255 / 0.16); display: flex; flex-wrap: wrap; gap: 20px 40px; align-items: center; justify-content: space-between; }
+  .fecho .lead { color: var(--papel); max-width: 52ch; }
+
+  .setor { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: var(--branco); border: 1px solid var(--linha); border-radius: var(--raio-lg); overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .setor:hover { color: inherit; transform: translateY(-3px); box-shadow: var(--sombra-lg); }
+  .setor__visual { position: relative; height: 250px; overflow: hidden; background: var(--papel-2); padding: 24px 0 0 24px; }
+  .setor__visual::after { content: ''; position: absolute; inset: auto 0 0 0; height: 60px; background: linear-gradient(transparent, var(--papel-2)); }
+  .setor__zoom { width: 135%; transform: scale(0.8); transform-origin: top left; pointer-events: none; }
+  .setor__texto { padding: 26px 28px 30px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .setor__texto p { color: var(--tinta-2); flex: 1; }
+  .setor__rotulo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--fonte-titulo); font-weight: 650; font-size: 1.4rem; letter-spacing: -0.02em; }
+  .setor__rotulo :global(svg) { width: 26px; height: 26px; color: var(--papaya-escuro); }
+  .setor .link-seta { align-self: flex-start; }
+  .grade-2 + .reservado__nota { margin-top: 16px; }
+
+  .alem { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 80px); align-items: center; }
+  @media (max-width: 900px) { .alem { grid-template-columns: minmax(0, 1fr); } }
+
+  .caso { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
+  @media (max-width: 860px) { .caso { grid-template-columns: minmax(0, 1fr); } }
+</style>
