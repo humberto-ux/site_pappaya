@@ -75,7 +75,10 @@ No GTM, crie os eventos GA4 a partir desses nomes e marque `whatsapp_click` e `g
 
 ## Publicação
 
-O conteúdo de `dist/` pode ir para qualquer hospedagem de site estático (Hostinger, Vercel, Netlify, Cloudflare Pages). A escolha ainda está em aberto.
+O site será publicado na hospedagem atual da Pappaya (Turbo Cloud). O conteúdo de `dist/` é estático, então também roda em qualquer outra hospedagem.
+
+- `public/.htaccess` força HTTPS e www, faz o redirecionamento 301 do endereço antigo e serve a página 404.
+- `.github/workflows/publicar.yml` gera o site e envia por FTP a cada mudança no ramo `main`, ou à mão pela aba Actions. Antes, cadastre no GitHub os segredos `FTP_SERVIDOR`, `FTP_USUARIO` e `FTP_SENHA` e as variáveis `PUBLIC_*` e `FTP_PASTA` (veja o início do arquivo). Faça backup do site WordPress atual antes da primeira publicação, porque os arquivos vão para a mesma pasta.
 
 Antes de publicar:
 

@@ -1,0 +1,42 @@
+# Publica o site na hospedagem (Turbo Cloud) por FTP.
+# Roda quando algo entra no ramo main, ou à mão pela aba Actions.
+# Antes de usar, cadastre em Settings > Secrets and variables > Actions:
+#   Secrets:   FTP_SERVIDOR, FTP_USUARIO, FTP_SENHA
+#   Variables: PUBLIC_WHATSAPP, PUBLIC_FORM_ENDPOINT, PUBLIC_GTM_ID,
+#              PUBLIC_OCULTAR_PENDENTES (true para publicar), FTP_PASTA (ex.: /public_html/)
+name: Publicar site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: publicar
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+        env:
+          PUBLIC_WHATSAPP: ${{ vars.PUBLIC_WHATSAPP }}
+          PUBLIC_FORM_ENDPOINT: ${{ vars.PUBLIC_FORM_ENDPOINT }}
+          PUBLIC_GTM_ID: ${{ vars.PUBLIC_GTM_ID }}
+          PUBLIC_OCULTAR_PENDENTES: ${{ vars.PUBLIC_OCULTAR_PENDENTES }}
+      - name: Enviar por FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVIDOR }}
+          username: ${{ secrets.FTP_USUARIO }}
+          password: ${{ secrets.FTP_SENHA }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ${{ vars.FTP_PASTA || '/public_html/' }}
