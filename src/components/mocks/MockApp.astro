@@ -1,0 +1,134 @@
+---
+/**
+ * Tela completa da Valentina (caixa de entrada) para a abertura da página inicial.
+ * Ilustração com dados fictícios até chegar a tela real.
+ */
+import './mocks.css';
+const conversas = [
+  { n: 'Marina Lopes', ini: 'ML', cor: 'papaya', msg: 'Financiar. Até uns 450 mil.', h: '19:43', tag: 'Residencial Jardins', ativo: true },
+  { n: 'Carlos Mendes', ini: 'CM', cor: 'azul', msg: 'Pode me mandar a planta?', h: '19:31', tag: 'Torre Horizonte', novas: 2 },
+  { n: 'Fernanda Costa', ini: 'FC', cor: 'roxo', msg: 'Somos 2 adultos e 2 crianças', h: '19:12', tag: 'Hotel · Praia' },
+  { n: 'Paulo Reis', ini: 'PR', cor: 'tinta', msg: 'IA: qual faixa de valor você…', h: '18:58', tag: 'Vale Verde' },
+  { n: 'Ana Duarte', ini: 'AD', cor: 'cinza', msg: 'Confirmado sábado às 10h', h: '18:40', tag: 'Residencial Jardins' },
+];
+---
+<div class="app janela" role="img" aria-label="Ilustração da caixa de entrada da Valentina com uma conversa de WhatsApp, o resumo da IA e o responsável atribuído. Dados fictícios.">
+  <div class="janela__barra" aria-hidden="true">
+    <span class="janela__pontos"><i></i><i></i><i></i></span>
+    <span class="app__url">app.valentina · Atendimento</span>
+    <span class="janela__chip">exemplo</span>
+  </div>
+  <div class="app__corpo" aria-hidden="true">
+    <nav class="app__trilho">
+      <span class="app__logo">V</span>
+      <i class="ativo">💬</i><i>▦</i><i>☑</i><i>▤</i><i>⚙</i>
+    </nav>
+
+    <aside class="app__lista">
+      <div class="app__busca">Buscar contato</div>
+      <div class="app__filtros"><b>Todos</b><span>Meus</span><span>Sem dono <em>3</em></span></div>
+      {conversas.map((c) => (
+        <div class:list={['app__conv', { 'app__conv--ativa': c.ativo }]}>
+          <span class={`m-avatar m-avatar--${c.cor}`}>{c.ini}</span>
+          <div class="app__conv-txt">
+            <div class="app__conv-topo"><strong>{c.n}</strong><small>{c.h}</small></div>
+            <p>{c.msg}</p>
+            <span class="app__unidade">{c.tag}</span>
+          </div>
+          {c.novas && <span class="app__novas">{c.novas}</span>}
+        </div>
+      ))}
+    </aside>
+
+    <section class="app__chat">
+      <header class="app__chat-topo">
+        <span class="m-avatar m-avatar--papaya">ML</span>
+        <div><strong>Marina Lopes</strong><small>WhatsApp · Unidade Centro</small></div>
+        <span class="app__btn">Transferir</span>
+      </header>
+      <div class="m-chat app__msgs">
+        <div class="m-sistema">Origem: anúncio Residencial Jardins · Meta Ads</div>
+        <div class="m-balao m-balao--cliente">Oi! Vi o anúncio do Residencial Jardins. Quero saber do apartamento de 2 quartos.<small>19:42</small></div>
+        <div class="m-balao m-balao--ia"><em>VALENTINA · IA</em>Olá, Marina! Você pretende financiar ou pagar à vista? E qual faixa de valor está buscando?<small>19:42</small></div>
+        <div class="m-balao m-balao--cliente">Financiar. Até uns 450 mil.<small>19:43</small></div>
+        <div class="m-sistema app__transf">Rafael Antunes assumiu a conversa</div>
+        <div class="m-balao m-balao--ia app__humano"><em>RAFAEL · CORRETOR</em>Oi, Marina! Separei a planta e uma simulação pra você 😊<small>19:44</small></div>
+      </div>
+      <div class="app__digitar">Escreva uma mensagem…<span>➤</span></div>
+    </section>
+
+    <aside class="app__ficha">
+      <div class="app__bloco">
+        <span class="m-rotulo">Origem</span>
+        <div class="app__tags"><span class="m-tag m-tag--papaya">Meta Ads</span><span class="m-tag">Residencial Jardins</span></div>
+      </div>
+      <div class="m-caixa m-ia">
+        <span class="m-rotulo">Resumo da IA</span>
+        <p>2 quartos no Residencial Jardins. Vai financiar, até R$ 450 mil. Pediu planta e condições.</p>
+      </div>
+      <div class="app__bloco">
+        <span class="m-rotulo">Responsável</span>
+        <span class="app__resp"><span class="m-avatar m-avatar--tinta">RA</span>Rafael Antunes</span>
+      </div>
+      <div class="app__bloco">
+        <span class="m-rotulo">Etapa do funil</span>
+        <div class="app__etapas"><i class="ok"></i><i class="ok"></i><i></i><i></i></div>
+        <small>Qualificado · próximo: visita</small>
+      </div>
+      <div class="app__bloco">
+        <span class="m-rotulo">Retorno</span>
+        <span class="m-tag m-tag--verde">Amanhã, 10:00</span>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<style>
+  .app { font-size: 12.5px; }
+  .app__url { flex: 1; max-width: 340px; margin-inline: auto; text-align: center; font-size: 12px; color: var(--m-texto-2); background: #fff; border: 1px solid var(--m-linha); border-radius: 8px; padding: 4px 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .app .janela__chip { margin-left: 0; }
+  .app__corpo { display: grid; grid-template-columns: 56px 260px minmax(0, 1fr) 250px; height: 500px; }
+  .app__trilho { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 14px 0; background: var(--tinta); }
+  .app__trilho i { font-style: normal; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; color: #94a3b8; font-size: 15px; filter: grayscale(1); }
+  .app__trilho i.ativo { background: rgb(255 255 255 / 0.12); filter: none; }
+  .app__logo { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--papaya); color: #fff; font-weight: 800; margin-bottom: 6px; }
+  .app__lista { border-right: 1px solid var(--m-linha); background: #fff; overflow: hidden; display: flex; flex-direction: column; }
+  .app__busca { margin: 12px; padding: 8px 12px; border-radius: 10px; background: var(--m-suave); color: #94a3b8; }
+  .app__filtros { display: flex; gap: 6px; padding: 0 12px 10px; border-bottom: 1px solid var(--m-linha); }
+  .app__filtros > * { padding: 4px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 600; color: var(--m-texto-2); }
+  .app__filtros b { background: var(--tinta); color: #fff; }
+  .app__filtros em { font-style: normal; background: var(--papaya); color: #fff; border-radius: 999px; padding: 0 5px; margin-left: 2px; font-size: 10px; }
+  .app__conv { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: start; padding: 11px 12px; border-bottom: 1px solid var(--m-linha); }
+  .app__conv--ativa { background: var(--papaya-claro); box-shadow: inset 3px 0 0 var(--papaya); }
+  .app__conv .m-avatar { width: 34px; height: 34px; font-size: 11.5px; }
+  .app__conv-txt { min-width: 0; }
+  .app__conv-topo { display: flex; justify-content: space-between; gap: 6px; }
+  .app__conv-topo small { color: #94a3b8; font-size: 10.5px; }
+  .app__conv p { color: var(--m-texto-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12px; }
+  .app__unidade { display: inline-block; margin-top: 4px; font-size: 10.5px; font-weight: 600; color: var(--m-texto-2); background: var(--m-suave); border-radius: 6px; padding: 1px 6px; }
+  .app__novas { background: var(--verde); color: #fff; font-size: 10.5px; font-weight: 700; border-radius: 999px; min-width: 18px; height: 18px; display: grid; place-items: center; margin-top: 18px; }
+  .app__chat { display: flex; flex-direction: column; min-width: 0; }
+  .app__chat-topo { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid var(--m-linha); background: #fff; }
+  .app__chat-topo strong { display: block; font-size: 13.5px; }
+  .app__chat-topo small { color: var(--m-texto-2); font-size: 11px; }
+  .app__btn { margin-left: auto; font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 8px; border: 1px solid var(--m-linha); }
+  .app__msgs { flex: 1; justify-content: flex-end; overflow: hidden; }
+  .app__transf { background: var(--verde-claro); color: var(--verde-escuro); }
+  .app__humano { background: #e7f0ff; }
+  .app__humano em { color: #2563eb !important; }
+  .app__digitar { display: flex; justify-content: space-between; margin: 10px 12px 12px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--m-linha); color: #94a3b8; }
+  .app__digitar span { color: var(--verde); }
+  .app__ficha { border-left: 1px solid var(--m-linha); padding: 14px; display: flex; flex-direction: column; gap: 14px; background: #fff; overflow: hidden; }
+  .app__bloco { display: flex; flex-direction: column; gap: 6px; }
+  .app__bloco small { color: var(--m-texto-2); font-size: 11px; }
+  .app__tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .app .m-ia p { margin-top: 6px; font-size: 12px; }
+  .app__resp { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; }
+  .app__resp .m-avatar { width: 24px; height: 24px; font-size: 10px; }
+  .app__etapas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+  .app__etapas i { height: 6px; border-radius: 3px; background: var(--m-linha); }
+  .app__etapas i.ok { background: var(--papaya); }
+
+  @media (max-width: 1100px) { .app__corpo { grid-template-columns: 56px 240px minmax(0, 1fr); } .app__ficha { display: none; } }
+  @media (max-width: 760px) { .app__corpo { grid-template-columns: minmax(0, 1fr); height: 440px; } .app__trilho, .app__lista { display: none; } .app .janela__chip { display: none; } }
+</style>

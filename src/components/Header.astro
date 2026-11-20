@@ -43,7 +43,7 @@ const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
 <style>
   .topo {
     position: sticky; top: 0; z-index: 50;
-    background: rgb(251 248 243 / 0.82);
+    background: rgb(255 255 255 / 0.85);
     backdrop-filter: saturate(1.4) blur(14px);
     -webkit-backdrop-filter: saturate(1.4) blur(14px);
     border-bottom: 1px solid transparent;
@@ -56,11 +56,11 @@ const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
   .topo__nav ul { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
   .topo__nav a:not(.botao) {
     display: block; padding: 8px 12px; border-radius: 999px;
-    font-size: 0.95rem; font-weight: 500; text-decoration: none; color: var(--tinta-2);
+    font-size: 0.95rem; font-weight: 600; text-decoration: none; color: var(--tinta-2);
     transition: background-color 0.15s ease, color 0.15s ease;
   }
   .topo__nav a:not(.botao):hover { color: var(--tinta); background: var(--papel-2); }
-  .topo__nav a[aria-current='page'] { color: var(--tinta); background: var(--papel-2); }
+  .topo__nav a[aria-current='page'] { color: var(--papaya-escuro); background: var(--papaya-claro); }
   .topo__cta { min-height: 44px; padding: 10px 18px; font-size: 0.95rem; }
   .topo__cta-movel, .topo__menu { display: none; }
 
@@ -85,16 +85,16 @@ const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
 
     .topo__nav {
       position: fixed; inset: 72px 0 0 0; margin: 0;
-      background: var(--papel); padding: 16px var(--gutter) 32px;
+      background: #fff; padding: 16px var(--gutter) 32px;
       visibility: hidden; opacity: 0; transform: translateY(-8px);
       transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
       overflow-y: auto;
     }
-    .topo--aberto { background: var(--papel); }
+    .topo--aberto { background: #fff; }
     .topo--aberto .topo__nav { visibility: visible; opacity: 1; transform: none; }
     .topo__nav ul { flex-direction: column; gap: 0; }
     .topo__nav a:not(.botao) {
-      font-family: var(--fonte-titulo); font-size: 1.6rem; font-weight: 600; color: var(--tinta);
+      font-family: var(--fonte-titulo); font-size: 1.5rem; font-weight: 700; color: var(--tinta);
       padding: 14px 0; border-radius: 0; border-bottom: 1px solid var(--linha);
     }
     .topo__nav a:not(.botao):hover, .topo__nav a[aria-current='page'] { background: none; color: var(--papaya-escuro); }

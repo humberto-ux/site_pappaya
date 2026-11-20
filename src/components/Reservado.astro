@@ -1,9 +1,10 @@
 ---
 /** Espaço reservado para uma tela, foto ou vídeo real que ainda não chegou. */
+import { ocultarPendentes } from '../config';
 interface Props { nota: string; class?: string }
 const { nota, class: classe } = Astro.props;
 ---
 <figure class:list={['reservado', classe]} style="margin:0">
   <slot />
-  <figcaption class="reservado__nota">Espaço reservado · {nota}</figcaption>
+  {!ocultarPendentes && <figcaption class="reservado__nota">Ilustração com dados fictícios · no lugar entra: {nota}</figcaption>}
 </figure>

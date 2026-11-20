@@ -16,18 +16,20 @@ const { titulo, texto } = Astro.props;
 <style>
   .chamada__caixa {
     position: relative; overflow: hidden; isolation: isolate;
-    background: var(--tinta); color: var(--papel);
+    background: linear-gradient(135deg, #ff7a2b 0%, #ea5a0c 55%, #c2410c 100%); color: #fff;
     border-radius: clamp(22px, 3vw, 36px);
     padding: clamp(40px, 7vw, 96px) clamp(24px, 6vw, 88px);
     text-align: center;
   }
   .chamada__brilho {
     position: absolute; z-index: -1; width: 680px; height: 680px; left: 50%; top: -420px; transform: translateX(-50%);
-    background: radial-gradient(closest-side, rgb(242 98 46 / 0.55), rgb(242 98 46 / 0) 70%);
+    background: radial-gradient(closest-side, rgb(255 255 255 / 0.25), rgb(255 255 255 / 0) 70%);
   }
   .chamada h2 { max-width: 18ch; margin-inline: auto; }
-  .chamada .lead { color: #c9d3ce; margin: 20px auto 32px; }
+  .chamada .lead { color: #fff3ea; margin: 20px auto 32px; }
   .chamada .botoes { justify-content: center; }
-  .chamada :global(.botao--contorno) { --b-fg: var(--papel); --b-borda: rgb(255 255 255 / 0.3); }
-  .chamada :global(.botao--contorno:hover) { --b-borda: var(--papel); }
+  .chamada :global(.botao--papaya) { --b-bg: #fff; --b-fg: var(--papaya-escuro); --b-borda: #fff; box-shadow: none; }
+  .chamada :global(.botao--contorno) { --b-bg: transparent; --b-fg: #fff; --b-borda: rgb(255 255 255 / 0.55); }
+  .chamada :global(.botao--contorno svg) { color: #fff; }
+  .chamada :global(.botao--contorno:hover) { --b-borda: #fff; }
 </style>

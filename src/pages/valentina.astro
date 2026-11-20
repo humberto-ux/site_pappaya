@@ -154,10 +154,9 @@ import { linkFormulario } from '../config';
   .duas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
   @media (max-width: 900px) { .duas { grid-template-columns: minmax(0, 1fr); } }
   .duas__item { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; padding: clamp(28px, 4vw, 44px); }
-  .duas__item--verde { background: var(--verde); color: var(--papel); border-color: var(--verde); }
-  .duas__item--verde .sobretitulo { color: #bfe6d3; }
-  .duas__item--verde .sobretitulo::before { background: #bfe6d3; }
-  .duas__item--verde .duas__texto { color: #e3f2ea; }
+  .duas__item--verde { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+  .duas__item--verde .sobretitulo { color: #ffb48a; background: rgb(255 107 26 / 0.15); }
+  .duas__item--verde .duas__texto { color: #cbd5e1; }
   .h2-menor { font-size: clamp(1.6rem, 2.8vw, 2.2rem); }
   .duas__texto { color: var(--tinta-2); }
   .lista-check { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 12px; }

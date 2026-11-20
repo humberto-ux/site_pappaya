@@ -7,7 +7,7 @@ import Icone from '../components/Icone.astro';
 import BotaoWhatsApp from '../components/BotaoWhatsApp.astro';
 import ChamadaFinal from '../components/ChamadaFinal.astro';
 import Metodo from '../components/Metodo.astro';
-import MockContato from '../components/mocks/MockContato.astro';
+import MockApp from '../components/mocks/MockApp.astro';
 import MockFunil from '../components/mocks/MockFunil.astro';
 import MockFila from '../components/mocks/MockFila.astro';
 import MockExecutivo from '../components/mocks/MockExecutivo.astro';
@@ -19,23 +19,46 @@ import { linkFormulario } from '../config';
   descricao="A Pappaya implanta o CRM Valentina com o WhatsApp de cada unidade, integra seus sistemas e acompanha até a rotina funcionar. Para incorporadoras, loteadoras e redes de hotéis."
 >
   <!-- 1.1 Abertura -->
-  <Abertura sobretitulo="CRM Valentina + implantação Pappaya" titulo="Nenhum cliente sem resposta. Nenhum contato sem dono.">
+  <Abertura sobretitulo="CRM com IA para WhatsApp + implantação" layout="centro">
+    <Fragment slot="titulo">Nenhum cliente sem resposta. <span class="marca-texto">Nenhum contato sem dono.</span></Fragment>
     <Fragment slot="subtitulo">A Pappaya organiza o atendimento e as vendas de empresas com várias unidades. Implantamos o CRM Valentina com o WhatsApp de cada equipe e acompanhamos até a rotina funcionar.</Fragment>
     <Fragment slot="botoes">
       <a class="botao botao--papaya" href="/valentina">Ver a Valentina funcionando</a>
       <BotaoWhatsApp pagina="inicio" rotulo="Conversar sobre um projeto" />
     </Fragment>
+    <Fragment slot="selos">
+      <li>WhatsApp de cada unidade</li>
+      <li>Implantação acompanhada</li>
+      <li>Atendimento em português</li>
+    </Fragment>
     <Fragment slot="visual">
-      <Reservado nota="substituir pela tela real da Valentina com dados fictícios">
-        <MockContato />
+      <Reservado nota="tela real da caixa de entrada da Valentina">
+        <MockApp />
       </Reservado>
-      <ol class="legenda">
-        <li><span>1</span>De onde o contato veio</li>
-        <li><span>2</span>O que a IA entendeu</li>
-        <li><span>3</span>Quem assumiu e o próximo passo</li>
-      </ol>
     </Fragment>
   </Abertura>
+
+  <!-- Faixa de segmentos -->
+  <section class="faixa" aria-label="Para quem é">
+    <div class="container faixa__linha">
+      <p>Para empresas que vendem e atendem pelo WhatsApp</p>
+      <ul>
+        <li><Icone nome="predio" />Incorporadoras</li>
+        <li><Icone nome="rota" />Loteadoras</li>
+        <li><Icone nome="cama" />Redes de hotéis</li>
+        <li><Icone nome="mensagem" />Revendas de veículos</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Logos e depoimentos: só com autorização -->
+  <section class="secao" style="padding-bottom:0">
+    <div class="container">
+      <Pendente bloco nota="Faixa de logos de clientes e depoimentos. Só entra com autorização por escrito de cada cliente.">
+        <div class="logos">{['Cliente 1','Cliente 2','Cliente 3','Cliente 4','Cliente 5'].map((c) => <span>{c}</span>)}</div>
+      </Pendente>
+    </div>
+  </section>
 
   <!-- 1.2 O problema -->
   <section class="secao">
@@ -81,7 +104,6 @@ import { linkFormulario } from '../config';
         <p class="lead"><Pendente>E o gestor acompanha tempo de resposta e retornos pendentes sem pedir relatório.</Pendente></p>
         <a class="link-seta" href="/valentina">Conhecer a Valentina</a>
       </div>
-      <p class="reservado__nota" style="margin-top:32px">Espaço reservado · uma tela por passo, ou um vídeo de 20 a 40 segundos que percorre os três</p>
     </div>
   </section>
 
@@ -110,7 +132,6 @@ import { linkFormulario } from '../config';
           </div>
         </a>
       </div>
-      <p class="reservado__nota">Espaço reservado · foto real ou tela do setor em cada cartão, nada de banco de imagens</p>
     </div>
   </section>
 
@@ -167,19 +188,16 @@ import { linkFormulario } from '../config';
 </Base>
 
 <style>
-  .legenda { list-style: none; margin: 18px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 0.9rem; color: var(--tinta-2); }
-  .legenda li { display: inline-flex; align-items: center; gap: 8px; }
-  .legenda span { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--papaya); color: var(--tinta); font-size: 12px; font-weight: 700; }
   @media (max-width: 640px) { .legenda { display: none; } }
 
   .fluxo { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; counter-reset: passo; }
   .fluxo li { position: relative; padding: 28px 28px 28px 0; border-top: 1px solid rgb(255 255 255 / 0.16); }
   .fluxo li + li { padding-left: 28px; border-left: 1px solid rgb(255 255 255 / 0.1); }
-  .fluxo li::before { counter-increment: passo; content: '0' counter(passo); position: absolute; top: 28px; right: 28px; font-family: var(--fonte-titulo); font-weight: 600; color: #6f8279; }
-  .fluxo__icone { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: rgb(242 98 46 / 0.16); color: #ffb08f; margin-bottom: 22px; }
+  .fluxo li::before { counter-increment: passo; content: '0' counter(passo); position: absolute; top: 28px; right: 28px; font-family: var(--fonte-titulo); font-weight: 600; color: #64748b; }
+  .fluxo__icone { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 14px; background: linear-gradient(135deg, #ff8a3d, var(--papaya-botao)); color: #fff; margin-bottom: 22px; }
   .fluxo__icone :global(svg) { width: 24px; height: 24px; }
   .fluxo h3 { font-size: 1.5rem; margin-bottom: 10px; }
-  .fluxo p { color: #c9d3ce; }
+  .fluxo p { color: #cbd5e1; }
   @media (max-width: 860px) {
     .fluxo { grid-template-columns: 1fr; }
     .fluxo li, .fluxo li + li { padding: 28px 0; border-left: 0; }
@@ -190,19 +208,27 @@ import { linkFormulario } from '../config';
 
   .setor { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: var(--branco); border: 1px solid var(--linha); border-radius: var(--raio-lg); overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease; }
   .setor:hover { color: inherit; transform: translateY(-3px); box-shadow: var(--sombra-lg); }
-  .setor__visual { position: relative; height: 250px; overflow: hidden; background: var(--papel-2); padding: 24px 0 0 24px; }
-  .setor__visual::after { content: ''; position: absolute; inset: auto 0 0 0; height: 60px; background: linear-gradient(transparent, var(--papel-2)); }
+  .setor__visual { position: relative; height: 250px; overflow: hidden; background: linear-gradient(135deg, #fff1e8, #f5f7fb); padding: 24px 0 0 24px; }
+  .setor__visual::after { content: ''; position: absolute; inset: auto 0 0 0; height: 60px; background: linear-gradient(transparent, #f5f7fb); }
   .setor__zoom { width: 135%; transform: scale(0.8); transform-origin: top left; pointer-events: none; }
   .setor__texto { padding: 26px 28px 30px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
   .setor__texto p { color: var(--tinta-2); flex: 1; }
   .setor__rotulo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--fonte-titulo); font-weight: 650; font-size: 1.4rem; letter-spacing: -0.02em; }
   .setor__rotulo :global(svg) { width: 26px; height: 26px; color: var(--papaya-escuro); }
   .setor .link-seta { align-self: flex-start; }
-  .grade-2 + .reservado__nota { margin-top: 16px; }
 
   .alem { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 80px); align-items: center; }
   @media (max-width: 900px) { .alem { grid-template-columns: minmax(0, 1fr); } }
 
   .caso { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
   @media (max-width: 860px) { .caso { grid-template-columns: minmax(0, 1fr); } }
+  .faixa { border-block: 1px solid var(--linha); background: #fff; }
+  .faixa__linha { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 32px; padding-block: 26px; }
+  .faixa p { font-weight: 700; color: var(--tinta-2); max-width: 30ch; }
+  .faixa ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+  .faixa li { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 12px; background: var(--papel-2); font-weight: 700; font-size: 0.95rem; }
+  .faixa li :global(svg) { width: 20px; height: 20px; color: var(--papaya-escuro); }
+  .logos { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+  .logos span { display: grid; place-items: center; height: 64px; border-radius: 12px; background: var(--papel-2); color: var(--tinta-3); font-weight: 700; }
+  @media (max-width: 700px) { .logos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 </style>

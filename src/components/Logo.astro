@@ -11,9 +11,9 @@ const { claro = false } = Astro.props;
   <svg class="logo__marca" viewBox="0 0 32 32" aria-hidden="true">
     <ellipse cx="16" cy="17" rx="11" ry="13" fill="var(--papaya)" />
     <ellipse cx="16" cy="19" rx="5" ry="6.5" fill="var(--tinta)" opacity="0.9" />
-    <circle cx="14.5" cy="17.5" r="1" fill="var(--papel)" />
-    <circle cx="17.5" cy="19.5" r="1" fill="var(--papel)" />
-    <circle cx="15" cy="21.5" r="1" fill="var(--papel)" />
+    <circle cx="14.5" cy="17.5" r="1" fill="#fff" />
+    <circle cx="17.5" cy="19.5" r="1" fill="#fff" />
+    <circle cx="15" cy="21.5" r="1" fill="#fff" />
   </svg>
   <span class="logo__nome" aria-hidden="true">pappaya</span>
 </span>
@@ -21,5 +21,5 @@ const { claro = false } = Astro.props;
   .logo { display: inline-flex; align-items: center; gap: 9px; color: var(--tinta); }
   .logo--claro { color: var(--papel); }
   .logo__marca { width: 28px; height: 28px; }
-  .logo__nome { font-family: var(--fonte-titulo); font-weight: 700; font-size: 1.45rem; letter-spacing: -0.04em; line-height: 1; }
+  .logo__nome { font-family: var(--fonte-titulo); font-weight: 800; font-size: 1.45rem; letter-spacing: -0.04em; line-height: 1; }
 </style>
