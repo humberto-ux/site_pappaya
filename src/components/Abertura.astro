@@ -1,0 +1,56 @@
+---
+/**
+ * Abertura (hero) das páginas.
+ * layout "centro": texto centralizado e visual grande embaixo (página inicial, Valentina).
+ * layout "lado": texto à esquerda e visual à direita (setores, soluções, sobre).
+ * Use <span class="marca-texto"> no título via o slot "titulo" para destacar palavras.
+ */
+interface Props { sobretitulo?: string; titulo?: string; layout?: 'lado' | 'centro' | 'empilhado' }
+const { sobretitulo, titulo, layout = 'lado' } = Astro.props;
+const modo = layout === 'empilhado' ? 'centro' : layout;
+---
+<section class:list={['abertura', `abertura--${modo}`]}>
+  <div class="abertura__fundo" aria-hidden="true"></div>
+  <div class="container abertura__grade">
+    <div class="abertura__texto">
+      {sobretitulo && <p class="sobretitulo">{sobretitulo}</p>}
+      <h1>{titulo}<slot name="titulo" /></h1>
+      <p class="lead abertura__sub"><slot name="subtitulo" /></p>
+      <div class="botoes"><slot name="botoes" /></div>
+      {Astro.slots.has('selos') && <ul class="abertura__selos"><slot name="selos" /></ul>}
+    </div>
+    <div class="abertura__visual"><slot name="visual" /></div>
+  </div>
+</section>
+<style>
+  .abertura { position: relative; overflow: hidden; padding: clamp(48px, 7vw, 88px) 0 clamp(56px, 8vw, 96px); isolation: isolate; }
+  .abertura__fundo {
+    position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(60% 55% at 50% 0%, rgb(255 107 26 / 0.16), transparent 70%),
+      radial-gradient(40% 40% at 100% 30%, rgb(255 168 108 / 0.18), transparent 70%),
+      linear-gradient(180deg, #fff8f3 0%, #ffffff 70%);
+  }
+  .abertura__grade { display: grid; gap: clamp(40px, 6vw, 64px); align-items: center; }
+  .abertura--lado .abertura__grade { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+  .abertura--lado .abertura__texto { max-width: 620px; }
+  .abertura--lado h1 { font-size: clamp(2.2rem, 4.2vw, 3.4rem); }
+  .abertura--centro .abertura__texto { max-width: 900px; margin-inline: auto; text-align: center; }
+  .abertura--centro .abertura__sub { margin-inline: auto; }
+  .abertura--centro .botoes, .abertura--centro .abertura__selos { justify-content: center; }
+  .abertura--centro .abertura__visual { max-width: 1160px; margin-inline: auto; width: 100%; position: relative; }
+  .abertura--centro .abertura__visual::before {
+    content: ''; position: absolute; inset: 8% 6% -4%; z-index: -1;
+    background: radial-gradient(closest-side, rgb(255 107 26 / 0.28), transparent); filter: blur(40px);
+  }
+  .abertura__sub { margin: 22px 0 32px; }
+  .abertura__selos { list-style: none; margin: 26px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 0.9rem; font-weight: 600; color: var(--tinta-2); }
+  .abertura__selos :global(li) { display: inline-flex; align-items: center; gap: 8px; }
+  .abertura__selos :global(li)::before { content: '✓'; display: grid; place-items: center; width: 20px; height: 20px; border-radius: 50%; background: var(--verde-claro); color: var(--verde-escuro); font-size: 11px; font-weight: 800; }
+  @media (max-width: 980px) {
+    .abertura--lado .abertura__grade { grid-template-columns: minmax(0, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .abertura .botoes :global(.botao) { width: 100%; }
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+/** Painel do gestor com período e base de comparação visíveis. */
+import Janela from './Janela.astro';
+interface Props { titulo?: string }
+const { titulo = 'Painel do gestor' } = Astro.props;
+const kpis = [
+  { rotulo: 'Primeira resposta (mediana)', valor: '6 min', ant: '14 min no período anterior', bom: true },
+  { rotulo: 'Retornos pendentes', valor: '9', ant: '23 no período anterior', bom: true },
+  { rotulo: 'Contatos novos', valor: '412', ant: '388 no período anterior', bom: true },
+];
+const barras = [
+  ['Centro', 82, 64], ['Jardins', 74, 58], ['Praia', 61, 66], ['Serra', 48, 40],
+];
+---
+<Janela titulo={titulo}>
+  <div class="mp">
+    <div class="mp__filtros">
+      <span class="m-tag">Período: 1 a 30 de out</span>
+      <span class="m-tag">Comparar com: 1 a 30 de set</span>
+      <span class="m-tag">Todas as unidades</span>
+    </div>
+    <div class="mp__kpis">
+      {kpis.map((k) => (
+        <div class="mp__kpi">
+          <span class="m-rotulo">{k.rotulo}</span>
+          <strong>{k.valor}</strong>
+          <small class:list={{ 'mp__bom': k.bom }}>{k.ant}</small>
+        </div>
+      ))}
+    </div>
+    <div class="mp__grafico">
+      <span class="m-rotulo">Conversão contato → visita, por unidade</span>
+      <div class="mp__barras">
+        {barras.map(([nome, atual, anterior]) => (
+          <div class="mp__barra">
+            <div class="mp__colunas">
+              <i class="mp__ant" style={`height:${anterior}%`}></i>
+              <i class="mp__atual" style={`height:${atual}%`}></i>
+            </div>
+            <span>{nome}</span>
+          </div>
+        ))}
+      </div>
+      <div class="mp__legenda"><span><i class="mp__atual"></i>Out</span><span><i class="mp__ant"></i>Set</span></div>
+    </div>
+  </div>
+</Janela>
+<style>
+  .mp { padding: 14px; display: flex; flex-direction: column; gap: 12px; background: var(--m-suave); }
+  .mp__filtros { display: flex; flex-wrap: wrap; gap: 6px; }
+  .mp__filtros .m-tag { background: #fff; }
+  .mp__kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .mp__kpi { background: #fff; border: 1px solid var(--m-linha); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+  .mp__kpi strong { font-family: var(--fonte-titulo); font-size: 26px; letter-spacing: -0.02em; line-height: 1.1; }
+  .mp__kpi small { font-size: 11px; color: var(--m-texto-2); }
+  .mp__bom::before { content: '▲ '; color: var(--verde); font-size: 9px; }
+  .mp__grafico { background: #fff; border: 1px solid var(--m-linha); border-radius: 12px; padding: 12px 14px; }
+  .mp__barras { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; height: 130px; margin-top: 12px; }
+  .mp__barra { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+  .mp__barra span { font-size: 11px; color: var(--m-texto-2); }
+  .mp__colunas { flex: 1; width: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 4px; border-bottom: 1px solid var(--m-linha); }
+  .mp__colunas i { width: 30%; max-width: 22px; border-radius: 5px 5px 0 0; }
+  i.mp__atual { background: var(--verde); }
+  i.mp__ant { background: #d6d0c4; }
+  .mp__legenda { display: flex; gap: 14px; margin-top: 10px; font-size: 11px; color: var(--m-texto-2); }
+  .mp__legenda span { display: inline-flex; align-items: center; gap: 6px; }
+  .mp__legenda i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; }
+  @media (max-width: 560px) { .mp__kpis { grid-template-columns: 1fr 1fr; } .mp__kpi:last-child { display: none; } }
+</style>

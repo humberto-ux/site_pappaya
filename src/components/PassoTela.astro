@@ -1,0 +1,25 @@
+---
+/** Bloco "passo com tela": número, título, texto e um visual ao lado. */
+interface Props { numero?: string | number; titulo: string; invertido?: boolean; id?: string }
+const { numero, titulo, invertido = false, id } = Astro.props;
+---
+<article class:list={['passo', { 'passo--invertido': invertido }]} id={id}>
+  <div class="passo__texto revelar">
+    {numero !== undefined && <span class="passo__numero">{String(numero).padStart(2, '0')}</span>}
+    <h3>{titulo}</h3>
+    <div class="passo__corpo"><slot /></div>
+  </div>
+  <div class="passo__visual revelar"><slot name="visual" /></div>
+</article>
+<style>
+  .passo { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(28px, 6vw, 80px); align-items: center; }
+  .passo + .passo { margin-top: clamp(56px, 9vw, 112px); }
+  .passo--invertido .passo__texto { order: 2; }
+  .passo__numero { display: inline-block; font-family: var(--fonte-titulo); font-weight: 700; font-size: 0.95rem; color: var(--papaya-escuro); background: var(--papaya-claro); padding: 4px 12px; border-radius: 999px; margin-bottom: 18px; }
+  .passo h3 { font-size: clamp(1.5rem, 2.6vw, 2.1rem); letter-spacing: -0.025em; line-height: 1.12; }
+  .passo__corpo { margin-top: 16px; color: var(--tinta-2); font-size: 1.06rem; }
+  @media (max-width: 860px) {
+    .passo { grid-template-columns: 1fr; }
+    .passo--invertido .passo__texto { order: 0; }
+  }
+</style>

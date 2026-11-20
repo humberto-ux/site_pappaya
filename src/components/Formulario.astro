@@ -1,0 +1,180 @@
+---
+/**
+ * Formulário de contato. Envia JSON para o webhook do n8n (PUBLIC_FORM_ENDPOINT),
+ * que procura ou cria o contato na Valentina e avisa o responsável.
+ * A chave da API da Valentina fica só no n8n, nunca aqui.
+ */
+import { formEndpoint, site, linkWhatsApp } from '../config';
+import Pendente from './Pendente.astro';
+interface Props { pagina: string }
+const { pagina } = Astro.props;
+
+const cargos = ['Sócio ou diretor', 'Gerente ou coordenador', 'Outro'];
+const setores = ['Incorporação ou loteamento', 'Hotelaria', 'Revenda de veículos', 'Outro'];
+const unidades = ['1', '2 a 5', '6 a 20', 'Mais de 20'];
+const interesses = [
+  { valor: 'Ver a Valentina', chave: 'valentina' },
+  { valor: 'Projeto ou diagnóstico', chave: 'projeto' },
+  { valor: 'Ainda não sei', chave: 'conversa' },
+];
+---
+<form class="form" data-form data-endpoint={formEndpoint} novalidate>
+  <input type="hidden" name="pagina" value={pagina} />
+  <input type="hidden" name="origem" value="site" />
+  <div class="form__isca" aria-hidden="true">
+    <label>Não preencha este campo <input type="text" name="empresa_site" tabindex="-1" autocomplete="off" /></label>
+  </div>
+
+  <div class="form__grade">
+    <label class="campo"><span>Nome <em>*</em></span><input name="nome" autocomplete="name" required /></label>
+    <label class="campo"><span>WhatsApp <em>*</em></span><input name="whatsapp" type="tel" inputmode="tel" autocomplete="tel" placeholder="(11) 90000-0000" required /></label>
+    <label class="campo"><span>E-mail corporativo <em>*</em></span><input name="email" type="email" autocomplete="email" required /></label>
+    <label class="campo"><span>Empresa <em>*</em></span><input name="empresa" autocomplete="organization" required /></label>
+    <label class="campo"><span>Cargo</span>
+      <select name="cargo"><option value="">Selecione</option>{cargos.map((c) => <option>{c}</option>)}</select>
+    </label>
+    <label class="campo"><span>Setor</span>
+      <select name="setor"><option value="">Selecione</option>{setores.map((c) => <option>{c}</option>)}</select>
+    </label>
+  </div>
+
+  <fieldset class="campo campo--opcoes">
+    <legend>Número de unidades ou empreendimentos</legend>
+    <div class="opcoes">{unidades.map((u) => <label class="opcao"><input type="radio" name="unidades" value={u} /><span>{u}</span></label>)}</div>
+  </fieldset>
+
+  <fieldset class="campo campo--opcoes">
+    <legend>O que você procura</legend>
+    <div class="opcoes">{interesses.map((i) => <label class="opcao"><input type="radio" name="interesse" value={i.valor} data-chave={i.chave} /><span>{i.valor}</span></label>)}</div>
+  </fieldset>
+
+  <label class="campo"><span>Mensagem <small>(opcional)</small></span>
+    <textarea name="mensagem" rows="4" placeholder="Qual é a principal dificuldade hoje?"></textarea>
+  </label>
+
+  <label class="consentimento">
+    <input type="checkbox" name="consentimento" value="sim" required />
+    <span>Concordo que a Pappaya use estes dados para entrar em contato sobre o meu pedido, conforme a <a href="/privacidade">Política de Privacidade</a>.</span>
+  </label>
+
+  <p class="form__erro" data-form-erro role="alert" hidden></p>
+
+  <div class="form__envio">
+    <button class="botao botao--papaya" type="submit" data-form-botao>Enviar</button>
+  </div>
+  <p class="form__alternativa" data-form-alternativa hidden>
+    Se preferir, <a href={linkWhatsApp('sobre')} data-whatsapp="sobre">chame a gente no WhatsApp</a>.
+  </p>
+</form>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-form]');
+  if (form) {
+    const erro = form.querySelector<HTMLElement>('[data-form-erro]')!;
+    const botao = form.querySelector<HTMLButtonElement>('[data-form-botao]')!;
+    const alternativa = form.querySelector<HTMLElement>('[data-form-alternativa]')!;
+    const endpoint = form.dataset.endpoint ?? '';
+
+    // Pré-seleciona "O que você procura" a partir do link (?interesse=valentina|projeto|conversa)
+    const chave = new URLSearchParams(location.search).get('interesse');
+    if (chave) form.querySelector<HTMLInputElement>(`input[data-chave="${CSS.escape(chave)}"]`)?.click();
+
+    const mostrarErro = (msg: string) => { erro.textContent = msg; erro.hidden = false; alternativa.hidden = false; };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      erro.hidden = true;
+      form.querySelectorAll('.campo--invalido').forEach((el) => el.classList.remove('campo--invalido'));
+
+      const dados = new FormData(form);
+      if (dados.get('empresa_site')) return; // robô
+
+      const faltando: string[] = [];
+      const marcar = (nome: string, rotulo: string) => {
+        form.querySelector(`[name="${nome}"]`)?.closest('.campo')?.classList.add('campo--invalido');
+        faltando.push(rotulo);
+      };
+      if (!String(dados.get('nome') ?? '').trim()) marcar('nome', 'nome');
+      const tel = String(dados.get('whatsapp') ?? '').replace(/\D/g, '');
+      if (tel.length < 10) marcar('whatsapp', 'WhatsApp com DDD');
+      const email = String(dados.get('email') ?? '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) marcar('email', 'e-mail válido');
+      if (!String(dados.get('empresa') ?? '').trim()) marcar('empresa', 'empresa');
+      if (!dados.get('consentimento')) faltando.push('concordância com a Política de Privacidade');
+
+      if (faltando.length) {
+        mostrarErro(`Falta preencher: ${faltando.join(', ')}.`);
+        alternativa.hidden = true;
+        form.querySelector<HTMLElement>('.campo--invalido input')?.focus();
+        return;
+      }
+
+      if (!endpoint) {
+        mostrarErro('O formulário ainda não está ligado ao nosso sistema.');
+        return;
+      }
+
+      const corpo: Record<string, string> = {};
+      dados.forEach((v, k) => { if (k !== 'empresa_site') corpo[k] = String(v); });
+      corpo.whatsapp = tel.startsWith('55') ? tel : `55${tel}`;
+      const params = new URLSearchParams(location.search);
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'gclid', 'fbclid'].forEach((p) => {
+        const v = params.get(p); if (v) corpo[p] = v;
+      });
+      corpo.enviado_em = new Date().toISOString();
+
+      botao.disabled = true;
+      botao.textContent = 'Enviando…';
+      try {
+        const r = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(corpo),
+        });
+        if (!r.ok) throw new Error(String(r.status));
+        location.href = '/obrigado';
+      } catch {
+        botao.disabled = false;
+        botao.textContent = 'Enviar';
+        mostrarErro('Não conseguimos enviar agora. Tente de novo em instantes.');
+      }
+    });
+  }
+</script>
+
+<style>
+  .form { display: grid; gap: 22px; }
+  .form__isca { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .form__grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  @media (max-width: 620px) { .form__grade { grid-template-columns: minmax(0, 1fr); } }
+  .campo { display: grid; gap: 8px; min-width: 0; }
+  .campo > span, .campo legend { font-weight: 600; font-size: 0.92rem; }
+  .campo em { color: var(--papaya-escuro); font-style: normal; }
+  .campo small { font-weight: 400; color: var(--tinta-3); }
+  .campo input, .campo select, .campo textarea {
+    width: 100%; min-height: 50px; padding: 12px 14px;
+    font: inherit; font-size: 1rem; color: var(--tinta);
+    background: var(--branco); border: 1.5px solid var(--linha-forte); border-radius: 12px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  .campo textarea { resize: vertical; min-height: 110px; }
+  .campo select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--tinta-2) 50%), linear-gradient(135deg, var(--tinta-2) 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 15px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 40px; }
+  .campo input:focus, .campo select:focus, .campo textarea:focus { outline: none; border-color: var(--tinta); box-shadow: 0 0 0 4px rgb(255 107 26 / 0.2); }
+  .campo--invalido input { border-color: #c0392b; }
+  .campo--opcoes { border: 0; margin: 0; padding: 0; }
+  .campo--opcoes legend { padding: 0; margin-bottom: 10px; }
+  .opcoes { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opcao { position: relative; }
+  .opcao input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+  .opcao span { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 16px; border-radius: 999px; border: 1.5px solid var(--linha-forte); background: var(--branco); font-size: 0.95rem; font-weight: 500; transition: all 0.15s ease; }
+  .opcao input:checked + span { background: var(--tinta); border-color: var(--tinta); color: var(--papel); }
+  .opcao input:focus-visible + span { outline: 3px solid var(--papaya); outline-offset: 2px; }
+  .consentimento { display: flex; gap: 12px; align-items: flex-start; font-size: 0.92rem; color: var(--tinta-2); }
+  .consentimento input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--tinta); flex: none; }
+  .form__erro { background: #fdecea; color: #8e2a1e; border-radius: 12px; padding: 12px 16px; font-size: 0.95rem; }
+  .form__envio { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+  .form__envio .botao { min-width: 160px; }
+  .form__envio .botao:disabled { opacity: 0.6; cursor: wait; }
+  .form__prazo { font-size: 0.9rem; color: var(--tinta-3); }
+  .form__alternativa { font-size: 0.95rem; }
+</style>

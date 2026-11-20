@@ -1,0 +1,104 @@
+---
+import Logo from './Logo.astro';
+import { navegacao, linkFormulario } from '../config';
+const atual = Astro.url.pathname.replace(/\/$/, '') || '/';
+---
+<header class="topo" data-topo>
+  <div class="container topo__linha">
+    <a href="/" class="topo__logo" aria-label="Pappaya, página inicial"><Logo /></a>
+    <nav class="topo__nav" aria-label="Principal">
+      <ul id="menu" data-menu>
+        {navegacao.map((item) => (
+          <li><a href={item.href} aria-current={atual === item.href ? 'page' : undefined}>{item.rotulo}</a></li>
+        ))}
+        <li class="topo__cta-movel"><a class="botao botao--papaya" href={linkFormulario('valentina')}>Agendar demonstração</a></li>
+      </ul>
+    </nav>
+    <a class="botao botao--papaya topo__cta" href={linkFormulario('valentina')}>Agendar demonstração</a>
+    <button class="topo__menu" type="button" aria-expanded="false" aria-controls="menu" data-abrir-menu>
+      <span class="sr-only">Abrir menu</span>
+      <span class="topo__hamb" aria-hidden="true"></span>
+    </button>
+  </div>
+</header>
+
+<script>
+  const topo = document.querySelector<HTMLElement>('[data-topo]');
+  const botao = document.querySelector<HTMLButtonElement>('[data-abrir-menu]');
+  const aoRolar = () => topo?.classList.toggle('topo--rolado', window.scrollY > 8);
+  aoRolar();
+  window.addEventListener('scroll', aoRolar, { passive: true });
+  botao?.addEventListener('click', () => {
+    const aberto = botao.getAttribute('aria-expanded') === 'true';
+    botao.setAttribute('aria-expanded', String(!aberto));
+    botao.querySelector('.sr-only')!.textContent = aberto ? 'Abrir menu' : 'Fechar menu';
+    topo?.classList.toggle('topo--aberto', !aberto);
+    document.body.style.overflow = aberto ? '' : 'hidden';
+  });
+  document.querySelectorAll('[data-menu] a').forEach((a) => a.addEventListener('click', () => {
+    if (botao?.getAttribute('aria-expanded') === 'true') botao.click();
+  }));
+</script>
+
+<style>
+  .topo {
+    position: sticky; top: 0; z-index: 50;
+    background: rgb(255 255 255 / 0.85);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .topo--rolado { border-bottom-color: var(--linha); }
+  .topo__linha { display: flex; align-items: center; gap: 24px; height: 72px; }
+  .topo__logo { text-decoration: none; display: inline-flex; }
+  .topo__nav { margin-left: auto; }
+  .topo__nav ul { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; }
+  .topo__nav a:not(.botao) {
+    display: block; padding: 8px 12px; border-radius: 999px;
+    font-size: 0.95rem; font-weight: 600; text-decoration: none; color: var(--tinta-2);
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+  .topo__nav a:not(.botao):hover { color: var(--tinta); background: var(--papel-2); }
+  .topo__nav a[aria-current='page'] { color: var(--papaya-escuro); background: var(--papaya-claro); }
+  .topo__cta { min-height: 44px; padding: 10px 18px; font-size: 0.95rem; }
+  .topo__cta-movel, .topo__menu { display: none; }
+
+  @media (max-width: 960px) {
+    .topo__cta { display: none; }
+    .topo__menu {
+      display: grid; place-items: center; margin-left: auto;
+      width: 44px; height: 44px; border-radius: 12px;
+      border: 1px solid var(--linha-forte); background: var(--branco); cursor: pointer;
+    }
+    .topo__hamb, .topo__hamb::before, .topo__hamb::after {
+      display: block; width: 18px; height: 2px; border-radius: 2px; background: var(--tinta);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+    .topo__hamb { position: relative; }
+    .topo__hamb::before, .topo__hamb::after { content: ''; position: absolute; left: 0; }
+    .topo__hamb::before { top: -6px; }
+    .topo__hamb::after { top: 6px; }
+    .topo--aberto .topo__hamb { background: transparent; }
+    .topo--aberto .topo__hamb::before { transform: translateY(6px) rotate(45deg); }
+    .topo--aberto .topo__hamb::after { transform: translateY(-6px) rotate(-45deg); }
+
+    .topo__nav {
+      position: fixed; inset: 72px 0 0 0; margin: 0;
+      background: #fff; padding: 16px var(--gutter) 32px;
+      visibility: hidden; opacity: 0; transform: translateY(-8px);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      overflow-y: auto;
+    }
+    .topo--aberto { background: #fff; }
+    .topo--aberto .topo__nav { visibility: visible; opacity: 1; transform: none; }
+    .topo__nav ul { flex-direction: column; gap: 0; }
+    .topo__nav a:not(.botao) {
+      font-family: var(--fonte-titulo); font-size: 1.5rem; font-weight: 700; color: var(--tinta);
+      padding: 14px 0; border-radius: 0; border-bottom: 1px solid var(--linha);
+    }
+    .topo__nav a:not(.botao):hover, .topo__nav a[aria-current='page'] { background: none; color: var(--papaya-escuro); }
+    .topo__cta-movel { display: block; margin-top: 28px; }
+    .topo__cta-movel .botao { width: 100%; }
+  }
+</style>

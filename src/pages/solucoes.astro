@@ -1,0 +1,137 @@
+---
+import Base from '../layouts/Base.astro';
+import Abertura from '../components/Abertura.astro';
+import Pendente from '../components/Pendente.astro';
+import Reservado from '../components/Reservado.astro';
+import Icone from '../components/Icone.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import BotaoWhatsApp from '../components/BotaoWhatsApp.astro';
+import MockExecutivo from '../components/mocks/MockExecutivo.astro';
+import { linkFormulario } from '../config';
+
+const perguntas = [
+  { p: 'Em quais carteiras se concentrou o aumento dos atrasos?', entra: 'Títulos do ERP, vencimentos, baixas, segmento do cliente', possivel: 'Saber onde concentrar a equipe de cobrança neste mês' },
+  { p: 'Quando pausar uma cobrança?', entra: 'Baixas do ERP, respostas no WhatsApp, marcação de intervenção humana', possivel: 'Não cobrar quem pagou, respondeu ou está negociando' },
+  { p: 'A ocupação por horário justifica uma quarta quadra?', entra: 'Reservas por horário e dia, cancelamentos, pedidos recusados', possivel: 'Decidir se investe em capacidade ou muda o preço por horário' },
+  { p: 'Como estão propostas, contratos, recebimentos e comissões?', entra: 'ERP da incorporadora e funil da Valentina', possivel: 'Acompanhar a venda do lead ao recebimento' },
+];
+const servicos = [
+  { t: 'Integrações entre CRM e ERP.', d: 'Os dados de propostas, contratos e recebimentos no mesmo lugar do funil.', i: 'elo' },
+  { t: 'Automações.', d: 'Réguas de cobrança, avisos e tarefas que respeitam baixas, respostas e intervenção humana.', i: 'raio' },
+  { t: 'Portais operacionais.', d: 'Telas simples para parceiros, unidades ou clientes consultarem o que precisam.', i: 'janela' },
+  { t: 'Organização documental.', d: 'Contratos e documentos encontráveis e ligados ao cliente certo.', i: 'pasta' },
+  { t: 'Relatórios executivos.', d: 'Os indicadores que a diretoria usa, com período e base de comparação.', i: 'grafico' },
+] as const;
+---
+<Base
+  pagina="solucoes"
+  titulo="Integração CRM e ERP, automações e inteligência de gestão | Pappaya"
+  descricao="Partimos da pergunta da diretoria e chegamos aos dados: integrações entre sistemas, automações, portais e relatórios executivos."
+>
+  <!-- 5.1 Abertura -->
+  <Abertura sobretitulo="Soluções sob projeto" titulo="Partimos de uma decisão e chegamos aos dados.">
+    <Fragment slot="subtitulo">Quando o problema vai além do atendimento, a Pappaya liga o CRM ao ERP, automatiza rotinas e organiza as informações que a diretoria usa para decidir.</Fragment>
+    <Fragment slot="botoes">
+      <a class="botao botao--papaya" href={linkFormulario('projeto')}>Pedir um diagnóstico</a>
+      <BotaoWhatsApp pagina="solucoes" />
+    </Fragment>
+    <Fragment slot="visual">
+      <Reservado nota="gráfico ou painel executivo com dados mascarados"><MockExecutivo /></Reservado>
+    </Fragment>
+  </Abertura>
+
+  <!-- 5.2 Perguntas que já ajudamos a responder -->
+  <section class="secao secao--branca">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">Perguntas que já ajudamos a responder</p>
+        <h2>Cada projeto começa com uma pergunta da diretoria</h2>
+      </div>
+      <Pendente bloco nota="Exemplos anônimos. Cada cartão só entra se a Pappaya fez ou está fazendo esse trabalho.">
+        <div class="perguntas">
+          {perguntas.map((q) => (
+            <article class="pergunta revelar">
+              <h3>“{q.p}”</h3>
+              <dl>
+                <div><dt>O que entra</dt><dd>{q.entra}</dd></div>
+                <div><dt>O que passa a ser possível</dt><dd>{q.possivel}</dd></div>
+              </dl>
+            </article>
+          ))}
+        </div>
+      </Pendente>
+    </div>
+  </section>
+
+  <!-- 5.3 O que fazemos -->
+  <section class="secao">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">O que fazemos</p>
+        <h2>Projetos sob medida</h2>
+      </div>
+      <ul class="servicos">
+        {servicos.map((s) => (
+          <li class="revelar"><span class="icone"><Icone nome={s.i} /></span><div><h3>{s.t}</h3><p>{s.d}</p></div></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- 5.4 Como funciona o diagnóstico -->
+  <section class="secao secao--tinta">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">Como funciona o diagnóstico</p>
+        <h2>Primeiro entendemos. Depois orçamos.</h2>
+      </div>
+      <div class="diag">
+        <div class="cartao revelar">
+          <span class="diag__etiqueta">Sem custo · 30 a 45 minutos</span>
+          <h3>Primeira conversa</h3>
+          <p>Entendemos a operação, dizemos se o caso é de produto ou de diagnóstico e damos uma faixa de investimento.</p>
+        </div>
+        <div class="diag__seta" aria-hidden="true"><Icone nome="seta" /></div>
+        <div class="cartao revelar">
+          <span class="diag__etiqueta diag__etiqueta--papaya">Contratado</span>
+          <h3>Diagnóstico</h3>
+          <p>Mapeamos a rotina e os sistemas, levantamos os dados, definimos responsabilidades e regras e entregamos um plano de implantação com escopo, prazo e preço fechados.</p>
+          <p class="diag__nota"><Pendente nota="Decisão comercial pendente">Se você seguir com a implantação, o valor do diagnóstico é abatido.</Pendente></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5.5 Chamada final -->
+  <ChamadaFinal titulo="Qual decisão você está tentando tomar?" texto="Conte a pergunta que a sua diretoria não consegue responder hoje. A gente diz o que seria preciso para respondê-la.">
+    <a class="botao botao--papaya" href={linkFormulario('projeto')}>Pedir um diagnóstico</a>
+    <BotaoWhatsApp pagina="solucoes" />
+  </ChamadaFinal>
+</Base>
+
+<style>
+  .perguntas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  @media (max-width: 800px) { .perguntas { grid-template-columns: minmax(0, 1fr); } }
+  .pergunta { background: var(--papel); border: 1px solid var(--linha); border-radius: var(--raio-lg); padding: clamp(22px, 3vw, 32px); display: flex; flex-direction: column; gap: 20px; }
+  .pergunta h3 { font-size: clamp(1.25rem, 2vw, 1.55rem); letter-spacing: -0.02em; }
+  .pergunta dl { margin: 0; display: grid; gap: 14px; border-top: 1px solid var(--linha); padding-top: 18px; }
+  .pergunta dt { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tinta-3); }
+  .pergunta dd { margin: 4px 0 0; color: var(--tinta-2); }
+  .pergunta div:last-child dd { color: var(--tinta); font-weight: 600; }
+
+  .servicos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); border-top: 1px solid var(--linha-forte); }
+  .servicos li { display: flex; gap: 20px; padding: 28px 24px 28px 0; border-bottom: 1px solid var(--linha-forte); }
+  .servicos .icone { flex: none; margin: 0; }
+  .servicos h3 { margin-bottom: 6px; }
+  .servicos p { color: var(--tinta-2); }
+
+  .diag { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.3fr); gap: 20px; align-items: stretch; }
+  .diag .cartao { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  .diag h3 { font-size: 1.6rem; margin: 0; }
+  .diag__etiqueta { font-size: 0.78rem; font-weight: 600; padding: 4px 12px; border-radius: 999px; background: rgb(255 255 255 / 0.1); color: #dfe7e3; }
+  .diag__etiqueta--papaya { background: var(--papaya); color: var(--tinta); }
+  .diag__seta { display: grid; place-items: center; color: #ffb48a; }
+  .diag__seta :global(svg) { width: 32px; height: 32px; }
+  .diag__nota { font-size: 0.95rem; margin-top: 4px; }
+  @media (max-width: 860px) { .diag { grid-template-columns: minmax(0, 1fr); } .diag__seta { transform: rotate(90deg); } }
+</style>

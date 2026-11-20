@@ -1,0 +1,29 @@
+---
+/** Roteiro de demonstração: passos numerados à esquerda, visual fixo à direita. */
+interface Props { passos: { titulo: string; texto: string }[] }
+const { passos } = Astro.props;
+---
+<div class="roteiro">
+  <ol class="roteiro__passos">
+    {passos.map((p, i) => (
+      <li class="revelar">
+        <span class="roteiro__n">{i + 1}</span>
+        <div><h3>{p.titulo}</h3><p>{p.texto}</p></div>
+      </li>
+    ))}
+  </ol>
+  <div class="roteiro__visual"><slot /></div>
+</div>
+<style>
+  .roteiro { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(28px, 5vw, 64px); align-items: start; }
+  .roteiro__passos { list-style: none; margin: 0; padding: 0; position: relative; }
+  .roteiro__passos::before { content: ''; position: absolute; left: 19px; top: 24px; bottom: 24px; width: 2px; background: linear-gradient(var(--papaya), var(--linha-forte)); }
+  .roteiro__passos li { position: relative; display: grid; grid-template-columns: 40px 1fr; gap: 20px; padding: 0 0 36px; }
+  .roteiro__passos li:last-child { padding-bottom: 0; }
+  .roteiro__n { position: relative; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--tinta); color: var(--papel); font-family: var(--fonte-titulo); font-weight: 700; box-shadow: 0 0 0 6px var(--papel); }
+  :global(.secao--branca) .roteiro__n { box-shadow: 0 0 0 6px var(--branco); }
+  .roteiro h3 { margin: 8px 0 8px; }
+  .roteiro p { color: var(--tinta-2); }
+  .roteiro__visual { position: sticky; top: 100px; }
+  @media (max-width: 900px) { .roteiro { grid-template-columns: minmax(0, 1fr); } .roteiro__visual { position: static; } }
+</style>

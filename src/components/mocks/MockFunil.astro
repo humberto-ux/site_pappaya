@@ -1,0 +1,45 @@
+---
+/** Funil separado por empreendimento (incorporação). */
+import Janela from './Janela.astro';
+const colunas = [
+  { etapa: 'Novo contato', n: 14, cards: [['Marina Lopes', 'RA', 'Retornar 19:58', 'verde'], ['Paulo Reis', 'CS', 'IA qualificando', '']] },
+  { etapa: 'Visita agendada', n: 6, cards: [['Ana Duarte', 'RA', 'Sáb 10h · decorado', 'papaya'], ['Jorge Lima', 'TM', 'Confirmar', 'ambar']] },
+  { etapa: 'Proposta', n: 3, cards: [['Família Prado', 'CS', 'Análise de crédito', '']] },
+  { etapa: 'Contrato', n: 2, cards: [['L. Martins', 'TM', 'Assinatura dia 28', 'verde']] },
+];
+---
+<Janela titulo="Funil · Lançamentos">
+  <div class="mf__abas">
+    <span class="mf__aba mf__aba--ativa">Residencial Jardins</span>
+    <span class="mf__aba">Loteamento Vale Verde</span>
+    <span class="mf__aba">Torre Horizonte</span>
+  </div>
+  <div class="mf__colunas">
+    {colunas.map((c) => (
+      <div class="mf__coluna">
+        <div class="mf__cab"><span>{c.etapa}</span><b>{c.n}</b></div>
+        {c.cards.map(([nome, ini, prox, cor]) => (
+          <div class="mf__card">
+            <strong>{nome}</strong>
+            <div class="mf__rodape"><span class="m-avatar">{ini}</span><span class:list={['m-tag', cor && `m-tag--${cor}`]}>{prox}</span></div>
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</Janela>
+<style>
+  .mf__abas { display: flex; gap: 4px; padding: 12px 14px 0; border-bottom: 1px solid var(--m-linha); overflow: hidden; }
+  .mf__aba { padding: 8px 12px; font-weight: 600; font-size: 12.5px; color: var(--m-texto-2); border-bottom: 2px solid transparent; white-space: nowrap; }
+  .mf__aba--ativa { color: var(--m-texto); border-color: var(--papaya); }
+  .mf__colunas { display: grid; grid-template-columns: repeat(4, minmax(130px, 1fr)); gap: 10px; padding: 14px; background: var(--m-suave); overflow: hidden; }
+  .mf__coluna { display: flex; flex-direction: column; gap: 8px; }
+  .mf__cab { display: flex; justify-content: space-between; font-size: 11.5px; font-weight: 600; color: var(--m-texto-2); padding: 0 2px 4px; }
+  .mf__cab b { color: var(--m-texto); }
+  .mf__card { background: #fff; border: 1px solid var(--m-linha); border-radius: 10px; padding: 10px; }
+  .mf__card strong { display: block; font-size: 12.5px; margin-bottom: 8px; }
+  .mf__rodape { display: flex; align-items: center; gap: 6px; }
+  .mf__rodape .m-avatar { width: 22px; height: 22px; font-size: 9.5px; }
+  .mf__rodape .m-tag { font-size: 10.5px; padding: 1px 6px; overflow: hidden; text-overflow: ellipsis; }
+  @media (max-width: 640px) { .mf__colunas { grid-template-columns: repeat(2, 1fr); } .mf__coluna:nth-child(n+3) { display: none; } }
+</style>

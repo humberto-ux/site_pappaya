@@ -1,0 +1,121 @@
+---
+import Base from '../layouts/Base.astro';
+import Abertura from '../components/Abertura.astro';
+import Pendente from '../components/Pendente.astro';
+import Reservado from '../components/Reservado.astro';
+import Roteiro from '../components/Roteiro.astro';
+import Icone from '../components/Icone.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import BotaoWhatsApp from '../components/BotaoWhatsApp.astro';
+import MockFila from '../components/mocks/MockFila.astro';
+import MockConversa from '../components/mocks/MockConversa.astro';
+import MockFilas from '../components/mocks/MockFilas.astro';
+import { linkFormulario } from '../config';
+
+const passos = [
+  { titulo: 'O pedido chega.', texto: 'Sábado, 22h. Um hóspede escreve para o número da unidade Praia. A IA pergunta as datas, o número de adultos, as idades das crianças e a preferência de camas.' },
+  { titulo: 'A IA sabe o que pode fazer.', texto: 'Se houver integração com as tarifas, ela informa uma faixa de preço. Sem integração, avisa que a recepção envia a cotação pela manhã. Ela nunca confirma reserva.' },
+  { titulo: 'A recepção assume.', texto: 'No domingo cedo, a recepção abre a fila e encontra o pedido completo. Envia a cotação sem perguntar nada de novo e agenda um retorno.' },
+  { titulo: 'O gerente acompanha.', texto: 'Ele vê quantas cotações chegaram fora do horário, quanto tempo levou para cada uma ser enviada e quantas viraram reserva.' },
+];
+---
+<Base
+  pagina="hotelaria"
+  titulo="Atendimento de hotéis no WhatsApp com IA e CRM | Pappaya"
+  descricao="A cotação de fim de semana chega completa à recepção, com datas, ocupação e preferências. Para redes com várias unidades."
+>
+  <!-- 4.1 Abertura -->
+  <Abertura sobretitulo="Hotelaria" titulo="A cotação de sábado chega completa na recepção.">
+    <Fragment slot="subtitulo"><Pendente>O hóspede pede preço no WhatsApp a qualquer hora. A Valentina coleta datas, ocupação, idades das crianças e preferência de camas, e a recepção encontra tudo pronto para cotar.</Pendente></Fragment>
+    <Fragment slot="botoes">
+      <a class="botao botao--papaya" href={linkFormulario('valentina')}>Ver o roteiro de cotação</a>
+      <BotaoWhatsApp pagina="hotelaria" />
+    </Fragment>
+    <Fragment slot="visual">
+      <Reservado nota="tela da fila da recepção com um pedido de cotação completo, dados fictícios"><MockFila /></Reservado>
+    </Fragment>
+  </Abertura>
+
+  <!-- 4.2 A rotina que conhecemos -->
+  <section class="secao secao--tinta">
+    <div class="container rotina">
+      <div class="revelar">
+        <p class="sobretitulo">A rotina que conhecemos</p>
+        <h2>Quem responde o hóspede quando a recepção está ocupada, ou fechada?</h2>
+      </div>
+      <p class="lead revelar">A cotação chega no sábado à noite e só é vista no domingo. Quando alguém responde, precisa perguntar tudo de novo. Enquanto isso, o hóspede já pediu preço em outros três hotéis.</p>
+    </div>
+  </section>
+
+  <!-- 4.3 Do pedido à cotação -->
+  <section class="secao secao--branca">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">Roteiro de demonstração</p>
+        <h2>Do pedido à cotação, em quatro passos</h2>
+      </div>
+      <Pendente bloco nota="Os quatro passos só vão ao ar com o roteiro gravado em ambiente de demonstração.">
+        <Roteiro passos={passos}>
+          <Reservado nota="vídeo do roteiro gravado, com o momento da passagem para a recepção destacado"><MockConversa /></Reservado>
+        </Roteiro>
+      </Pendente>
+    </div>
+  </section>
+
+  <!-- 4.4 Consultar, cotar e reservar -->
+  <section class="secao">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">Consultar, cotar e reservar são três coisas diferentes</p>
+        <h2>A IA ajuda. A reserva continua com você.</h2>
+      </div>
+      <div class="grade grade-3 acoes">
+        <div class="cartao revelar">
+          <span class="acoes__quem acoes__quem--ia">IA, com integração</span>
+          <span class="icone"><Icone nome="pergunta" /></span>
+          <h3>Consultar tarifa.</h3>
+          <p><Pendente>A IA pode informar uma faixa de preço quando estiver ligada ao seu sistema de tarifas.</Pendente></p>
+        </div>
+        <div class="cartao revelar">
+          <span class="acoes__quem">Recepção</span>
+          <span class="icone"><Icone nome="mensagem" /></span>
+          <h3>Encaminhar cotação.</h3>
+          <p>A recepção recebe o pedido completo e envia a proposta.</p>
+        </div>
+        <div class="cartao revelar">
+          <span class="acoes__quem">Sua equipe ou sistema</span>
+          <span class="icone"><Icone nome="escudo" /></span>
+          <h3>Confirmar reserva.</h3>
+          <p>Fica com a sua equipe ou com o seu sistema de reservas. A IA não confirma.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4.5 Uma unidade ou várias -->
+  <section class="secao secao--papel2">
+    <div class="container lado">
+      <div class="revelar">
+        <p class="sobretitulo">Uma unidade ou várias</p>
+        <h2>Número por unidade ou central compartilhada</h2>
+        <p class="lead" style="margin-top:20px"><Pendente>Cada unidade pode ter o seu número, o seu agente e a sua recepção, ou todas podem cair numa central de reservas. Você escolhe na implantação e pode mudar depois.</Pendente></p>
+      </div>
+      <Reservado class="revelar" nota="esquema simples com os dois modelos lado a lado"><MockFilas titulo="Unidades e central" unidades={['Unidade Praia', 'Unidade Serra']} /></Reservado>
+    </div>
+  </section>
+
+  <!-- 4.6 Chamada final -->
+  <ChamadaFinal titulo="Veja uma cotação de fim de semana do início ao fim" texto="Na demonstração, montamos o pedido com uma das suas unidades e mostramos onde a recepção assume.">
+    <a class="botao botao--papaya" href={linkFormulario('valentina')}>Agendar demonstração</a>
+    <BotaoWhatsApp pagina="hotelaria" />
+  </ChamadaFinal>
+</Base>
+
+<style>
+  .rotina { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 6vw, 80px); align-items: end; }
+  .lado { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 6vw, 80px); align-items: center; }
+  @media (max-width: 900px) { .rotina, .lado { grid-template-columns: minmax(0, 1fr); } }
+  .acoes .cartao { position: relative; }
+  .acoes__quem { position: absolute; top: 24px; right: 24px; font-size: 0.75rem; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--papel-2); color: var(--tinta-2); }
+  .acoes__quem--ia { background: var(--papaya-claro); color: var(--papaya-escuro); }
+</style>

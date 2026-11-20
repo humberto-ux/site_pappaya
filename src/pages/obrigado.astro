@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import Pendente from '../components/Pendente.astro';
+import BotaoWhatsApp from '../components/BotaoWhatsApp.astro';
+import { site } from '../config';
+---
+<Base pagina="obrigado" titulo="Pedido recebido | Pappaya" descricao="Recebemos o seu pedido." semIndice>
+  <section class="secao">
+    <div class="container obrigado">
+      <span class="obrigado__selo" aria-hidden="true">✓</span>
+      <h1>Recebemos o seu pedido.</h1>
+      <p class="lead">Alguém da Pappaya vai chamar você no WhatsApp em até <Pendente nota="Prazo a confirmar pela Pappaya">{site.prazoResposta}</Pendente>. Se preferir adiantar, chame agora.</p>
+      <div class="botoes"><BotaoWhatsApp pagina="sobre" estilo="papaya" /><a class="botao botao--contorno" href="/">Voltar ao início</a></div>
+    </div>
+  </section>
+  <!-- Formulário enviado: evento GA4 "generate_lead" -->
+  <script is:inline>
+    (window.dataLayer = window.dataLayer || []).push({ event: 'generate_lead' });
+  </script>
+</Base>
+<style>
+  .obrigado { max-width: 720px; text-align: center; display: grid; justify-items: center; gap: 22px; padding-block: 40px; }
+  .obrigado__selo { display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: var(--verde-claro); color: var(--verde-escuro); font-size: 32px; font-weight: 700; }
+  .obrigado .botoes { justify-content: center; }
+</style>

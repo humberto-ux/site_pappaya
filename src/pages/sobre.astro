@@ -1,0 +1,117 @@
+---
+import Base from '../layouts/Base.astro';
+import Abertura from '../components/Abertura.astro';
+import Pendente from '../components/Pendente.astro';
+import Icone from '../components/Icone.astro';
+import BotaoWhatsApp from '../components/BotaoWhatsApp.astro';
+import Formulario from '../components/Formulario.astro';
+import { site, linkFormulario } from '../config';
+---
+<Base
+  pagina="sobre"
+  titulo="Sobre a Pappaya e Humberto Cintra | Contato"
+  descricao="Conheça quem implanta e acompanha o seu projeto. Fale pelo WhatsApp, agende uma conversa ou envie o formulário."
+>
+  <!-- 6.1 Abertura -->
+  <Abertura sobretitulo="Sobre a Pappaya" titulo="Um responsável que acompanha de perto.">
+    <Fragment slot="subtitulo">A Pappaya começa entendendo onde o seu processo perde informação, tempo ou responsabilidade. Depois desenhamos as regras, implantamos e ficamos até funcionar.</Fragment>
+    <Fragment slot="botoes">
+      <a class="botao botao--papaya" href="#formulario">Conversar com o Humberto</a>
+      <BotaoWhatsApp pagina="sobre" />
+    </Fragment>
+    <Fragment slot="visual">
+      <div class="foto-reservada foto-reservada--retrato"><div><strong>Foto de Humberto</strong>real, de preferência trabalhando com a equipe ou com um cliente</div></div>
+    </Fragment>
+  </Abertura>
+
+  <!-- 6.2 Humberto -->
+  <section class="secao secao--branca">
+    <div class="container pessoa">
+      <div class="revelar">
+        <p class="sobretitulo">Quem conduz</p>
+        <h2>Humberto Cintra</h2>
+      </div>
+      <div class="pessoa__texto revelar">
+        <p class="lead">A gente entra quando o dono de uma empresa pergunta “quem ficou com esse lead?” e ninguém sabe responder. Entendemos a rotina do time, definimos quem responde o quê, implantamos a Valentina com o WhatsApp de cada unidade e acompanhamos até funcionar. Trabalhamos principalmente com incorporadoras e redes de hotéis.</p>
+        <p><Pendente nota="Preencher a trajetória de Humberto">[2 ou 3 frases sobre a trajetória de Humberto: formação, anos de experiência, setores atendidos.]</Pendente></p>
+        {site.linkedinHumberto
+          ? <a class="link-seta" href={site.linkedinHumberto} target="_blank" rel="noopener">LinkedIn de Humberto</a>
+          : <span class="link-seta link-seta--inativo">LinkedIn de Humberto <small>(link a configurar)</small></span>}
+      </div>
+    </div>
+  </section>
+
+  <!-- 6.3 A Pappaya -->
+  <section class="secao">
+    <div class="container empresa">
+      <div class="revelar">
+        <p class="sobretitulo">A Pappaya</p>
+        <h2>O que fazemos</h2>
+        <p class="lead" style="margin-top:20px">Somos uma empresa de tecnologia aplicada à operação comercial e à gestão. Respondemos pelo diagnóstico, pelo desenho, pela implantação e pelo acompanhamento. O CRM Valentina é o nosso produto; integrações, automações, portais e relatórios executivos são projetos sob medida.</p>
+      </div>
+      <div class="foto-reservada revelar"><div><strong>Foto da equipe</strong>real, sem banco de imagens</div></div>
+    </div>
+  </section>
+
+  <!-- 6.4 Três formas de começar -->
+  <section class="secao secao--papel2">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">Três formas de começar</p>
+        <h2>Escolha o caminho que combina com o seu momento</h2>
+      </div>
+      <div class="grade grade-3">
+        <div class="cartao comecar revelar">
+          <span class="icone"><Icone nome="mensagem" /></span>
+          <h3>Ver a Valentina</h3>
+          <p>Para quem tem um problema de atendimento e distribuição de contatos.</p>
+          <a class="botao" href={linkFormulario('valentina')}>Agendar demonstração</a>
+        </div>
+        <div class="cartao comecar revelar">
+          <span class="icone"><Icone nome="elo" /></span>
+          <h3>Conversar sobre um projeto</h3>
+          <p>Para quem precisa ligar sistemas ou decidir com dados.</p>
+          <a class="botao" href={linkFormulario('projeto')}>Pedir um diagnóstico</a>
+        </div>
+        <div class="cartao comecar revelar">
+          <span class="icone"><Icone nome="pergunta" /></span>
+          <h3>Ainda não sei</h3>
+          <p>Uma conversa de 30 a 45 minutos, sem custo, para descobrir o caminho.</p>
+          <BotaoWhatsApp pagina="sobre" estilo="tinta" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6.5 Formulário -->
+  <section class="secao" id="formulario">
+    <div class="container contato">
+      <div class="contato__intro">
+        <p class="sobretitulo">Contato</p>
+        <h2>Conte um pouco da sua operação</h2>
+        <p class="lead" style="margin-top:18px"><Pendente nota="Prazo a confirmar pela Pappaya">Respondemos em até {site.prazoResposta}.</Pendente></p>
+      </div>
+      <div class="cartao contato__form">
+        <Formulario pagina="sobre" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .foto-reservada--retrato { aspect-ratio: 5 / 4; }
+  .pessoa { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: clamp(24px, 6vw, 80px); }
+  .pessoa__texto { display: grid; gap: 20px; justify-items: start; }
+  .link-seta--inativo { color: var(--tinta-3); border-bottom-style: dashed; }
+  .link-seta--inativo::after { content: none; }
+  .empresa { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(32px, 6vw, 80px); align-items: center; }
+  .comecar { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; }
+  .comecar p { flex: 1; margin-bottom: 20px; }
+  .contato { display: grid; grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr); gap: clamp(28px, 6vw, 72px); align-items: start; }
+  .contato__intro { position: sticky; top: 110px; }
+  .contato__form { padding: clamp(22px, 4vw, 44px); box-shadow: var(--sombra); }
+  @media (max-width: 900px) {
+    .pessoa, .empresa, .contato { grid-template-columns: minmax(0, 1fr); }
+    .contato__intro { position: static; }
+  }
+</style>

@@ -1,0 +1,34 @@
+---
+/** Conversa com a IA e o resumo gerado. */
+import Janela from './Janela.astro';
+---
+<Janela titulo="Conversa e resumo">
+  <div class="mcv">
+    <div class="m-chat">
+      <div class="m-balao m-balao--cliente">Boa noite, quanto fica um quarto pro feriado?<small>22:04</small></div>
+      <div class="m-balao m-balao--ia"><em>VALENTINA · IA</em>Boa noite! Para quais datas e quantas pessoas? Se houver crianças, me diga as idades.<small>22:04</small></div>
+      <div class="m-balao m-balao--cliente">12 a 15/12, eu, meu marido e duas crianças de 4 e 9.<small>22:05</small></div>
+      <div class="m-balao m-balao--ia"><em>VALENTINA · IA</em>Prefere uma cama de casal e duas de solteiro? A recepção envia a cotação amanhã cedo.<small>22:05</small></div>
+    </div>
+    <div class="mcv__resumo">
+      <div class="m-caixa m-ia">
+        <span class="m-rotulo">Resumo gerado</span>
+        <ul>
+          <li><b>Datas</b> 12 a 15/12</li>
+          <li><b>Ocupação</b> 2 adultos, 2 crianças (4 e 9)</li>
+          <li><b>Camas</b> casal + 2 solteiro</li>
+          <li><b>Unidade</b> Praia</li>
+        </ul>
+      </div>
+      <span class="m-tag m-tag--ambar">Limite da IA: não confirma reserva</span>
+    </div>
+  </div>
+</Janela>
+<style>
+  .mcv { display: grid; grid-template-columns: 1.2fr 1fr; }
+  .mcv .m-chat { border-right: 1px solid var(--m-linha); }
+  .mcv__resumo { padding: 14px; display: flex; flex-direction: column; gap: 10px; justify-content: center; align-items: flex-start; }
+  .mcv ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; font-size: 12.5px; }
+  .mcv li b { display: block; font-size: 10.5px; color: var(--m-texto-2); text-transform: uppercase; letter-spacing: 0.06em; }
+  @media (max-width: 560px) { .mcv { grid-template-columns: 1fr; } .mcv .m-chat { border-right: 0; } }
+</style>

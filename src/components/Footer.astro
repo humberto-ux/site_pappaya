@@ -1,0 +1,61 @@
+---
+import Logo from './Logo.astro';
+import Pendente from './Pendente.astro';
+import { site, linkWhatsApp, whatsappNumero } from '../config';
+const ano = new Date().getFullYear();
+const links = [
+  { href: '/valentina', rotulo: 'Valentina' },
+  { href: '/incorporadoras', rotulo: 'Incorporação' },
+  { href: '/hotelaria', rotulo: 'Hotelaria' },
+  { href: '/solucoes', rotulo: 'Soluções' },
+  { href: '/sobre', rotulo: 'Sobre' },
+  { href: '/sobre#formulario', rotulo: 'Contato' },
+  { href: '/privacidade', rotulo: 'Política de Privacidade' },
+];
+const canais = [
+  { href: whatsappNumero ? linkWhatsApp('sobre') : '', rotulo: 'WhatsApp', whatsapp: true },
+  { href: site.email ? `mailto:${site.email}` : '', rotulo: 'E-mail' },
+  { href: site.instagram, rotulo: 'Instagram' },
+  { href: site.linkedinEmpresa, rotulo: 'LinkedIn' },
+];
+---
+<footer class="rodape">
+  <div class="container rodape__grade">
+    <div class="rodape__marca">
+      <Logo claro />
+      <p>{site.assinatura}</p>
+    </div>
+    <nav aria-label="Rodapé">
+      <h2 class="rodape__titulo">Site</h2>
+      <ul>{links.map((l) => <li><a href={l.href}>{l.rotulo}</a></li>)}</ul>
+    </nav>
+    <div>
+      <h2 class="rodape__titulo">Fale com a gente</h2>
+      <ul>
+        {canais.map((c) => (
+          <li>
+            {c.href
+              ? <a href={c.href} {...(c.whatsapp ? { 'data-whatsapp': 'sobre' } : {})} {...(c.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>{c.rotulo}</a>
+              : <span class="rodape__falta">{c.rotulo} <small>(a configurar)</small></span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+  <div class="container rodape__base">
+    <p>© {ano} Pappaya. {site.razaoSocial ? `${site.razaoSocial} · CNPJ ${site.cnpj}` : <Pendente>Razão social e CNPJ a confirmar</Pendente>}</p>
+  </div>
+</footer>
+<style>
+  .rodape { background: var(--tinta); color: #cbd5e1; padding: clamp(56px, 8vw, 88px) 0 28px; font-size: 0.95rem; }
+  .rodape__grade { display: grid; gap: 40px; grid-template-columns: 1.6fr 1fr 1fr; }
+  @media (max-width: 760px) { .rodape__grade { grid-template-columns: 1fr 1fr; } .rodape__marca { grid-column: 1 / -1; } }
+  .rodape__marca p { margin-top: 16px; max-width: 30ch; font-size: 1.05rem; color: #e2e8f0; }
+  .rodape__titulo { font-family: var(--fonte-texto); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #94a3b8; margin-bottom: 14px; }
+  .rodape ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .rodape a { color: #e2e8f0; text-decoration: none; }
+  .rodape a:hover { color: #ffb48a; }
+  .rodape__falta { color: #94a3b8; }
+  .rodape__base { margin-top: 56px; padding-top: 22px; border-top: 1px solid rgb(255 255 255 / 0.1); font-size: 0.85rem; color: #94a3b8; }
+  .rodape__base :global(.pendente) { background: none; }
+</style>

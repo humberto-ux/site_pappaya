@@ -1,0 +1,167 @@
+---
+import Base from '../layouts/Base.astro';
+import Abertura from '../components/Abertura.astro';
+import Pendente from '../components/Pendente.astro';
+import Reservado from '../components/Reservado.astro';
+import Icone from '../components/Icone.astro';
+import PassoTela from '../components/PassoTela.astro';
+import Faq from '../components/Faq.astro';
+import FaqItem from '../components/FaqItem.astro';
+import ChamadaFinal from '../components/ChamadaFinal.astro';
+import BotaoWhatsApp from '../components/BotaoWhatsApp.astro';
+import Integracoes from '../components/Integracoes.astro';
+import MockContato from '../components/mocks/MockContato.astro';
+import MockOrigem from '../components/mocks/MockOrigem.astro';
+import MockFilas from '../components/mocks/MockFilas.astro';
+import MockConversa from '../components/mocks/MockConversa.astro';
+import MockRegra from '../components/mocks/MockRegra.astro';
+import MockLinhaTempo from '../components/mocks/MockLinhaTempo.astro';
+import MockPainel from '../components/mocks/MockPainel.astro';
+import { linkFormulario } from '../config';
+---
+<Base
+  pagina="valentina"
+  titulo="CRM Valentina | Atendimento no WhatsApp com IA e gestão comercial"
+  descricao="A Valentina recebe o contato no WhatsApp da unidade, entende o pedido com IA e entrega para a pessoa certa com o histórico pronto."
+>
+  <!-- 2.1 Abertura -->
+  <Abertura sobretitulo="CRM Valentina" titulo="Valentina recebe o contato onde ele já está e entrega para quem vai resolver." layout="empilhado">
+    <Fragment slot="subtitulo"><Pendente>O interessado escreve no WhatsApp da unidade. A IA entende o que ele quer, registra as informações e passa para o corretor, o vendedor ou a recepção certa, com o histórico pronto. O gestor acompanha tudo sem pedir relatório.</Pendente></Fragment>
+    <Fragment slot="botoes">
+      <a class="botao botao--papaya" href={linkFormulario('valentina')}>Agendar demonstração</a>
+      <a class="botao botao--contorno" href="#caminho">Ver um contato do início ao fim</a>
+    </Fragment>
+    <Fragment slot="visual">
+      <Reservado nota="vídeo curto em loop, sem som, mostrando uma conversa virando um contato atribuído">
+        <MockContato marcas={false} />
+      </Reservado>
+    </Fragment>
+  </Abertura>
+
+  <!-- 2.2 Para cada pessoa da operação -->
+  <section class="secao">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">Para cada pessoa da operação</p>
+        <h2>Uma ferramenta, três pontos de vista</h2>
+      </div>
+      <div class="grade grade-3">
+        <div class="cartao revelar"><span class="icone"><Icone nome="mensagem" /></span><h3>Cliente</h3><p>Conversa no WhatsApp que já usa e não precisa repetir a história para cada pessoa que atende.</p></div>
+        <div class="cartao revelar"><span class="icone"><Icone nome="pessoa" /></span><h3>Atendente</h3><p>Recebe o contato com o pedido resumido, sabe o que já foi conversado e tem a lista de retornos do dia.</p></div>
+        <div class="cartao revelar"><span class="icone"><Icone nome="painel" /></span><h3>Gestor</h3><p>Vê quem assumiu cada contato, quanto tempo levou a primeira resposta e quais retornos ficaram pendentes.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.3 O caminho de um contato -->
+  <section class="secao secao--branca" id="caminho">
+    <div class="container">
+      <div class="cabeca revelar">
+        <p class="sobretitulo">O caminho de um contato</p>
+        <h2>Do primeiro “oi” ao gestor, sem perder nada no meio</h2>
+      </div>
+
+      <PassoTela numero={1} titulo="De onde veio.">
+        <p><Pendente>Cada contato chega marcado com a campanha, o anúncio ou a página de origem. Você sabe qual investimento trouxe qual conversa.</Pendente></p>
+        <Reservado slot="visual" nota="tela do contato mostrando a origem"><MockOrigem /></Reservado>
+      </PassoTela>
+
+      <PassoTela numero={2} titulo="Um número por unidade, ou um atendimento compartilhado." invertido>
+        <p><Pendente>Cada unidade pode ter o seu WhatsApp e a sua fila, ou todas podem cair numa central. A escolha é feita na implantação, conforme a sua operação.</Pendente></p>
+        <Reservado slot="visual" nota="tela com dois números e duas filas"><MockFilas /></Reservado>
+      </PassoTela>
+
+      <PassoTela numero={3} titulo="A IA faz as perguntas certas.">
+        <p><Pendente>Ela pergunta o empreendimento, as datas ou o interesse, conforme o seu negócio, e entrega um resumo. As perguntas e os limites são definidos com a sua equipe.</Pendente></p>
+        <Reservado slot="visual" nota="vídeo da conversa e o resumo gerado"><MockConversa /></Reservado>
+      </PassoTela>
+
+      <PassoTela numero={4} titulo="A pessoa certa assume, na hora certa." invertido>
+        <p><Pendente>Uma regra envia o contato para o responsável ou a equipe. Quando a IA chega ao limite combinado, passa a conversa para uma pessoa, com o resumo.</Pendente></p>
+        <Reservado slot="visual" nota="tela da regra de distribuição e o momento da transferência"><MockRegra /></Reservado>
+      </PassoTela>
+
+      <PassoTela numero={5} titulo="Nada fica esquecido.">
+        <p><Pendente>Tarefas, etiquetas e retornos com data aparecem na lista de cada atendente, e o histórico reúne conversas e anotações no mesmo registro.</Pendente></p>
+        <Reservado slot="visual" nota="linha do tempo de um contato e lista de retornos do dia"><MockLinhaTempo /></Reservado>
+      </PassoTela>
+    </div>
+  </section>
+
+  <!-- 2.4 O que o gestor vê -->
+  <section class="secao secao--tinta">
+    <div class="container gestor">
+      <div class="revelar">
+        <p class="sobretitulo">O que o gestor vê</p>
+        <h2>A operação inteira em um painel</h2>
+        <p class="lead" style="margin-top:20px"><Pendente>Tempo até a primeira resposta, retornos pendentes e conversão por etapa do funil, por unidade e por responsável. Escolha o período e compare com o anterior.</Pendente></p>
+      </div>
+      <div class="revelar">
+        <Reservado nota="painel com período e base de comparação visíveis, dados fictícios"><MockPainel /></Reservado>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.5 Integrações + 2.6 Implantação acompanhada -->
+  <section class="secao">
+    <div class="container duas">
+      <div class="cartao duas__item revelar">
+        <p class="sobretitulo">Integrações</p>
+        <h2 class="h2-menor">Ligada aos sistemas que você já usa</h2>
+        <p class="duas__texto"><Pendente>Sob projeto, a Valentina pode mostrar no contato dados do ERP, do sistema de reservas ou do estoque: propostas, contratos, tarifas, disponibilidade. Cada integração é avaliada no diagnóstico.</Pendente></p>
+        <Integracoes />
+        <a class="link-seta" href="/solucoes">Falar sobre integrações</a>
+      </div>
+      <div class="cartao duas__item duas__item--verde revelar">
+        <p class="sobretitulo">Implantação acompanhada</p>
+        <h2 class="h2-menor">Não é só ligar e usar</h2>
+        <p class="duas__texto">A Pappaya configura a Valentina com as suas regras, treina a equipe e acompanha as primeiras semanas até a rotina funcionar. Você não fica sozinho com uma ferramenta nova.</p>
+        <ul class="lista-check">
+          <li><Icone nome="check" />Configuração com as suas regras</li>
+          <li><Icone nome="check" />Treinamento da equipe</li>
+          <li><Icone nome="check" />Acompanhamento nas primeiras semanas</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.7 Perguntas frequentes -->
+  <section class="secao secao--papel2">
+    <div class="container faq-grade">
+      <div class="revelar">
+        <p class="sobretitulo">Perguntas frequentes</p>
+        <h2>O que costumam nos perguntar</h2>
+      </div>
+      <Faq>
+        <FaqItem pergunta="A IA pode responder errado ao cliente?" aberto><Pendente>Ela trabalha dentro de perguntas e limites definidos com a sua equipe e passa a conversa para uma pessoa quando chega a esse limite.</Pendente></FaqItem>
+        <FaqItem pergunta="Posso usar o número de WhatsApp que já tenho?"><Pendente>[Resposta a confirmar pela equipe técnica.]</Pendente></FaqItem>
+        <FaqItem pergunta="Quanto tempo leva a implantação?"><Pendente>[Faixa a confirmar pela Pappaya.]</Pendente></FaqItem>
+        <FaqItem pergunta="Quanto custa?">Depende do número de unidades, de usuários e das integrações. Na primeira conversa, damos uma faixa de investimento.</FaqItem>
+      </Faq>
+    </div>
+  </section>
+
+  <!-- 2.8 Chamada final -->
+  <ChamadaFinal titulo="Veja a Valentina no seu cenário" texto="Na demonstração, usamos um exemplo do seu setor: um lead de lançamento ou uma cotação de fim de semana.">
+    <a class="botao botao--papaya" href={linkFormulario('valentina')}>Agendar demonstração</a>
+    <BotaoWhatsApp pagina="valentina" />
+  </ChamadaFinal>
+</Base>
+
+<style>
+  .gestor { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 80px); align-items: center; }
+  @media (max-width: 900px) { .gestor { grid-template-columns: minmax(0, 1fr); } }
+  .duas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  @media (max-width: 900px) { .duas { grid-template-columns: minmax(0, 1fr); } }
+  .duas__item { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; padding: clamp(28px, 4vw, 44px); }
+  .duas__item--verde { background: var(--tinta); color: #fff; border-color: var(--tinta); }
+  .duas__item--verde .sobretitulo { color: #ffb48a; background: rgb(255 107 26 / 0.15); }
+  .duas__item--verde .duas__texto { color: #cbd5e1; }
+  .h2-menor { font-size: clamp(1.6rem, 2.8vw, 2.2rem); }
+  .duas__texto { color: var(--tinta-2); }
+  .lista-check { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 12px; }
+  .lista-check li { display: flex; align-items: center; gap: 12px; font-weight: 500; }
+  .lista-check :global(svg) { width: 22px; height: 22px; padding: 3px; border-radius: 50%; background: rgb(255 255 255 / 0.16); }
+  .faq-grade { display: grid; grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr); gap: clamp(28px, 6vw, 80px); align-items: start; }
+  @media (max-width: 900px) { .faq-grade { grid-template-columns: minmax(0, 1fr); } }
+</style>
